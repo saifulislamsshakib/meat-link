@@ -4,72 +4,200 @@ import jwt from "jsonwebtoken";
 import { verifyEmail } from "../emailVerify/verifyEmail.js";
 import { Session } from "../models/sessionModel.js";
 import { sendOTPMail } from "../emailVerify/sendOTPMail.js";
+
+// export const register = async (req, res) => {
+//   try {
+//     const { firstName, lastName, email, password, role } = req.body;
+//     // if (!firstName || !lastName || !email || !password) {
+//     //   res.status(400).json({
+//     //     success: false,
+//     //     message: "All filds are required",
+//     //   });
+//     // }
+//     if (!firstName || !lastName || !email || !password) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields are required",
+//       });
+//     }
+//     const user = await User.findOne({ email });
+//     // if (user) {
+//     //   res.status(400).json({
+//     //     success: false,
+//     //     message: "User already exist",
+//     //   });
+//     // }
+//     if (user) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User already exists",
+//       });
+//     }
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = await User.create({
+//       firstName,
+//       lastName,
+//       email,
+//       password: hashedPassword,
+//       role,
+//     });
+//     const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, {
+//       expiresIn: "10m",
+//     });
+//     verifyEmail(token, email);
+//     newUser.token = token;
+//     await newUser.save();
+//     return res.status(201).json({
+//       success: true,
+//       message: "User register successfully",
+//       user: newUser,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const register = async (req, res) => {
   try {
     const { firstName, lastName, email, password, role } = req.body;
-    // if (!firstName || !lastName || !email || !password) {
-    //   res.status(400).json({
-    //     success: false,
-    //     message: "All filds are required",
-    //   });
-    // }
-    if (!firstName || !lastName || !email || !password) {
+
+    if (!firstName || !lastName || !email || !password || !role) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
-    const user = await User.findOne({ email });
-    // if (user) {
-    //   res.status(400).json({
-    //     success: false,
-    //     message: "User already exist",
-    //   });
-    // }
-    if (user) {
+
+    const allowedRoles = ["farmer", "slaughterhouse", "super_shop", "driver"];
+
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid registration role",
+      });
+    }
+
+    const existingUser = await User.findOne({
+      email,
+    });
+
+    if (existingUser) {
       return res.status(400).json({
         success: false,
         message: "User already exists",
       });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({
       firstName,
       lastName,
       email,
       password: hashedPassword,
       role,
+      isVarified: false,
+      accountStatus: "pending",
+      isLoggedIn: false,
     });
+
     const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, {
       expiresIn: "10m",
     });
+
     verifyEmail(token, email);
+
     newUser.token = token;
+
     await newUser.save();
+
     return res.status(201).json({
       success: true,
-      message: "User register successfully",
-      user: newUser,
+      message:
+        "Registration successful. Please verify your email. After email verification, your account will be reviewed by an administrator.",
+      user: {
+        _id: newUser._id,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
+        role: newUser.role,
+        isVarified: newUser.isVarified,
+        accountStatus: newUser.accountStatus,
+      },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
 
+// export const verify = async (req, res) => {
+//   try {
+//     const authHeader = req.headers.authorization;
+//     if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Authorization token is missing or invalid",
+//       });
+//     }
+//     const token = authHeader.split(" ")[1]; //[Barer, sdfhdsfhisd5dgf88r]
+//     let decoded;
+//     try {
+//       decoded = jwt.verify(token, process.env.SECRET_KEY);
+//     } catch (error) {
+//       if (error.name === "TokenExpiredError") {
+//         return res.status(400).json({
+//           success: false,
+//           message: "The registration token has expired",
+//         });
+//       }
+//       return res.status(400).json({
+//         success: false,
+//         message: "Token verification failed",
+//       });
+//     }
+//     const user = await User.findById(decoded.id);
+//     if (!user) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+//     user.token = null;
+//     user.isVarified = true;
+//     await user.save();
+//     return res.status(200).json({
+//       success: true,
+//       message: "user verified successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const verify = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
+
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(400).json({
         success: false,
         message: "Authorization token is missing or invalid",
       });
     }
-    const token = authHeader.split(" ")[1]; //[Barer, sdfhdsfhisd5dgf88r]
+
+    const token = authHeader.split(" ")[1];
+
     let decoded;
+
     try {
       decoded = jwt.verify(token, process.env.SECRET_KEY);
     } catch (error) {
@@ -79,27 +207,52 @@ export const verify = async (req, res) => {
           message: "The registration token has expired",
         });
       }
+
       return res.status(400).json({
         success: false,
         message: "Token verification failed",
       });
     }
+
     const user = await User.findById(decoded.id);
+
     if (!user) {
       return res.status(400).json({
         success: false,
         message: "User not found",
       });
     }
+
     user.token = null;
     user.isVarified = true;
+
+    // Keep account pending until admin approval
+    if (user.role === "admin") {
+      user.accountStatus = "approved";
+    } else if (user.accountStatus !== "rejected") {
+      user.accountStatus = "pending";
+    }
+
     await user.save();
+
     return res.status(200).json({
       success: true,
-      message: "user verified successfully",
+      message:
+        user.role === "admin"
+          ? "User verified successfully"
+          : "Email verified successfully. Your account is waiting for admin approval.",
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        isVarified: user.isVarified,
+        accountStatus: user.accountStatus,
+      },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -135,69 +288,181 @@ export const reVerify = async (req, res) => {
   }
 };
 
+// export const login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Need all the fields",
+//       });
+//     }
+//     const exestingUser = await User.findOne({ email });
+//     if (!exestingUser) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User not exist, sign up please",
+//       });
+//     }
+//     const isPasswordValid = await bcrypt.compare(
+//       password,
+//       exestingUser.password,
+//     );
+//     if (!isPasswordValid) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalied Credentials",
+//       });
+//     }
+//     if (exestingUser.isVarified === false) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "verify your account then loge in here",
+//       });
+//     }
+//     //generate token
+//     const accessToken = jwt.sign(
+//       { id: exestingUser._id },
+//       process.env.SECRET_KEY,
+//       { expiresIn: "10d" },
+//     );
+//     const refreshToken = jwt.sign(
+//       { id: exestingUser._id },
+//       process.env.SECRET_KEY,
+//       { expiresIn: "30d" },
+//     );
+//     exestingUser.isLoggedIn = true;
+//     await exestingUser.save();
+
+//     //if any exesting session valid then delete it
+//     const exestingSession = await Session.findOne({ userId: exestingUser._id });
+//     if (exestingSession) {
+//       await Session.deleteOne({ userId: exestingUser._id });
+//     }
+//     //create a new session
+
+//     await Session.create({ userId: exestingUser._id });
+//     return res.status(200).json({
+//       success: true,
+//       message: `Welcome back ${exestingUser.firstName}`,
+//       user: exestingUser,
+//       accessToken,
+//       refreshToken,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Need all the fields",
+        message: "Email and password are required",
       });
     }
-    const exestingUser = await User.findOne({ email });
-    if (!exestingUser) {
+
+    const existingUser = await User.findOne({
+      email,
+    });
+
+    if (!existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User not exist, sign up please",
+        message: "User does not exist. Please register first.",
       });
     }
+
     const isPasswordValid = await bcrypt.compare(
       password,
-      exestingUser.password,
+      existingUser.password,
     );
+
     if (!isPasswordValid) {
       return res.status(400).json({
         success: false,
-        message: "Invalied Credentials",
+        message: "Invalid credentials",
       });
     }
-    if (exestingUser.isVarified === false) {
+
+    // Email verification check
+    if (!existingUser.isVarified) {
       return res.status(400).json({
         success: false,
-        message: "verify your account then loge in here",
+        message: "Please verify your email before logging in.",
       });
     }
-    //generate token
-    const accessToken = jwt.sign(
-      { id: exestingUser._id },
-      process.env.SECRET_KEY,
-      { expiresIn: "10d" },
-    );
-    const refreshToken = jwt.sign(
-      { id: exestingUser._id },
-      process.env.SECRET_KEY,
-      { expiresIn: "30d" },
-    );
-    exestingUser.isLoggedIn = true;
-    await exestingUser.save();
 
-    //if any exesting session valid then delete it
-    const exestingSession = await Session.findOne({ userId: exestingUser._id });
-    if (exestingSession) {
-      await Session.deleteOne({ userId: exestingUser._id });
+    // Admin approval check
+    if (
+      existingUser.role !== "admin" &&
+      existingUser.accountStatus === "pending"
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account is waiting for admin approval.",
+      });
     }
-    //create a new session
 
-    await Session.create({ userId: exestingUser._id });
+    if (
+      existingUser.role !== "admin" &&
+      existingUser.accountStatus === "rejected"
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account registration was rejected by the administrator.",
+      });
+    }
+
+    const accessToken = jwt.sign(
+      { id: existingUser._id },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "10d",
+      },
+    );
+
+    const refreshToken = jwt.sign(
+      { id: existingUser._id },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "30d",
+      },
+    );
+
+    existingUser.isLoggedIn = true;
+
+    await existingUser.save();
+
+    const existingSession = await Session.findOne({
+      userId: existingUser._id,
+    });
+
+    if (existingSession) {
+      await Session.deleteOne({
+        userId: existingUser._id,
+      });
+    }
+
+    await Session.create({
+      userId: existingUser._id,
+    });
+
     return res.status(200).json({
       success: true,
-      message: `Welcome back ${exestingUser.firstName}`,
-      user: exestingUser,
+      message: `Welcome back ${existingUser.firstName}`,
+      user: existingUser,
       accessToken,
       refreshToken,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });

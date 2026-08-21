@@ -1,0 +1,357 @@
+.sh-procurement-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.sh-procurement-container {
+  width: min(1000px, 100%);
+  margin: auto;
+}
+
+.sh-procurement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.sh-procurement-header span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sh-procurement-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 32px;
+}
+
+.sh-procurement-header p {
+  color: #7d8797;
+  font-size: 14px;
+}
+
+.sh-procurement-back {
+  padding: 10px 16px;
+  border: 1px solid #dfe5eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #586477;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sh-procurement-error,
+.sh-procurement-success {
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.sh-procurement-error {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.sh-procurement-success {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.sh-procurement-card {
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(23, 32, 51, 0.05);
+}
+
+.sh-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.sh-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sh-form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.sh-form-field label {
+  color: #30394b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sh-form-field input,
+.sh-form-field select,
+.sh-form-field textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #273043;
+  font: inherit;
+}
+
+.sh-form-field input:focus,
+.sh-form-field select:focus,
+.sh-form-field textarea:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.sh-form-field input[readonly] {
+  background: #f8fafc;
+  color: #667184;
+}
+
+.sh-form-field textarea {
+  resize: vertical;
+}
+
+.sh-procurement-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.sh-procurement-cancel,
+.sh-procurement-submit {
+  padding: 12px 19px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sh-procurement-cancel {
+  background: #eef1f4;
+  color: #586477;
+}
+
+.sh-procurement-submit {
+  background: #16864a;
+  color: #ffffff;
+}
+
+.sh-procurement-submit:hover {
+  background: #116c3b;
+}
+
+.sh-procurement-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sh-no-livestock {
+  margin-top: 20px;
+  padding: 55px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+}
+
+.sh-no-livestock div {
+  margin-bottom: 10px;
+  font-size: 36px;
+}
+
+.sh-no-livestock h2 {
+  margin-bottom: 6px;
+  color: #273043;
+}
+
+.sh-no-livestock p {
+  color: #8992a2;
+  font-size: 13px;
+}
+
+.sh-procurement-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .sh-procurement-page {
+    padding: 105px 18px 30px;
+  }
+
+  .sh-procurement-header {
+    flex-direction: column;
+  }
+
+  .sh-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sh-form-field.full-width {
+    grid-column: auto;
+  }
+
+  .sh-procurement-card {
+    padding: 22px;
+  }
+
+  .sh-procurement-actions {
+    flex-direction: column-reverse;
+  }
+
+  .sh-procurement-cancel,
+  .sh-procurement-submit {
+    width: 100%;
+  }
+}
+.available-livestock-section {
+  margin-bottom: 20px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(23, 32, 51, 0.04);
+}
+
+.available-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.available-section-header h2 {
+  margin: 0 0 5px;
+  color: #172033;
+  font-size: 19px;
+}
+
+.available-section-header p {
+  color: #8992a2;
+  font-size: 12px;
+}
+
+.available-count {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #e9f7ef;
+  color: #16864a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.available-livestock-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.livestock-option-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #e3e8ed;
+  border-radius: 13px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.livestock-option-card:hover {
+  border-color: #16864a;
+  background: #fbfefc;
+}
+
+.livestock-option-card.selected {
+  border-color: #16864a;
+  background: #f1faf5;
+  box-shadow: 0 0 0 3px rgba(22, 134, 74, 0.08);
+}
+
+.livestock-option-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: #e9f7ef;
+  font-size: 20px;
+}
+
+.livestock-option-info strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #273043;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.livestock-option-info span {
+  display: block;
+  margin-bottom: 3px;
+  color: #657085;
+  font-size: 12px;
+}
+
+.livestock-option-info small {
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.livestock-option-price {
+  text-align: right;
+}
+
+.livestock-option-price strong {
+  display: block;
+  color: #16864a;
+  font-size: 14px;
+}
+
+.livestock-option-price span {
+  display: block;
+  margin-top: 4px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.no-livestock-inline {
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #8992a2;
+  font-size: 13px;
+}
+
+@media (max-width: 650px) {
+  .livestock-option-card {
+    grid-template-columns: 45px 1fr;
+  }
+
+  .livestock-option-price {
+    grid-column: 2;
+    text-align: left;
+  }
+}

@@ -4,6 +4,7 @@ import {
   acceptDelivery,
   assignDriver,
   completeDelivery,
+  getAvailableDrivers,
   getMyDeliveries,
   pickupDelivery,
   startDelivery,
@@ -17,6 +18,12 @@ import {
 const router = express.Router();
 
 // Slaughterhouse → Assign Driver
+router.get(
+  "/drivers",
+  isAuthenticated,
+  authorizeRoles("slaughterhouse"),
+  getAvailableDrivers,
+);
 router.post(
   "/assign",
   isAuthenticated,

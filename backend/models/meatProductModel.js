@@ -27,14 +27,14 @@ const meatProductSchema = new mongoose.Schema(
 
     meatType: {
       type: String,
-      enum: ["beef", "mutton", "buffalo", "other"],
+      enum: ["beef", "mutton", "buffalo", "goat", "other"],
       required: true,
     },
 
     quantity: {
       type: Number,
       required: true,
-      min: 1,
+      min: 0,
     },
 
     pricePerKg: {
@@ -53,6 +53,10 @@ const meatProductSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "packaged"],
       default: "pending",
+    },
+    isArchived: {
+      type: Boolean,
+      default: false,
     },
 
     description: {

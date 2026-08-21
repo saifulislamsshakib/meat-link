@@ -1,0 +1,188 @@
+.register-page {
+  min-height: 100vh;
+  padding: 100px 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f8fa;
+}
+
+.register-card {
+  width: min(560px, 100%);
+  padding: 32px;
+  border: 1px solid #e7ebef;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(23, 32, 51, 0.08);
+}
+
+.register-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.register-brand-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #e9f7ef;
+  font-size: 22px;
+}
+
+.register-brand h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 20px;
+}
+
+.register-brand span {
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.register-header {
+  margin-bottom: 22px;
+}
+
+.register-header h2 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 28px;
+}
+
+.register-header p {
+  color: #7d8797;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.register-error,
+.register-success {
+  margin-bottom: 18px;
+  padding: 13px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.register-error {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.register-success {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.register-success-note {
+  margin-top: 6px;
+  color: #586477;
+  font-size: 11px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.register-field label {
+  color: #30394b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.register-field input,
+.register-field select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #273043;
+  outline: none;
+  font: inherit;
+}
+
+.register-field input:focus,
+.register-field select:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.register-field small {
+  color: #8992a2;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.register-submit {
+  margin-top: 5px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #16864a;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.register-submit:hover {
+  background: #116c3b;
+}
+
+.register-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-footer {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 22px;
+  font-size: 12px;
+}
+
+.register-footer span {
+  color: #8992a2;
+}
+
+.register-footer a {
+  color: #16864a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 550px) {
+  .register-card {
+    padding: 23px;
+  }
+
+  .register-row {
+    grid-template-columns: 1fr;
+  }
+
+  .register-header h2 {
+    font-size: 24px;
+  }
+}

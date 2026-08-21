@@ -1,7 +1,28 @@
 import { Delivery } from "../models/deliveryModel.js";
 import { MeatOrder } from "../models/meatOrderModel.js";
 import { User } from "../models/userModel.js";
+import { createNotification } from "./notificationController.js";
 
+export const getAvailableDrivers = async (req, res) => {
+  try {
+    const drivers = await User.find({
+      role: "driver",
+    })
+      .select("_id firstName lastName email phoneNo role")
+      .sort({ firstName: 1, lastName: 1 });
+
+    return res.status(200).json({
+      success: true,
+      count: drivers.length,
+      drivers,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const assignDriver = async (req, res) => {
   try {
     const { orderId, driverId, pickupLocation, notes } = req.body;
@@ -80,6 +101,14 @@ export const assignDriver = async (req, res) => {
       deliveryZipCode: order.deliveryZipCode,
       notes: notes || "",
       status: "assigned",
+    });
+    await createNotification({
+      recipient: driver._id,
+      sender: req.user._id,
+      type: "delivery",
+      title: "New Delivery Assigned",
+      message: `A new delivery has been assigned to you for ${order.meatProduct.productName}.`,
+      relatedId: delivery._id,
     });
 
     return res.status(201).json({

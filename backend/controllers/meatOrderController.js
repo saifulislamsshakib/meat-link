@@ -1,5 +1,84 @@
 import { MeatOrder } from "../models/meatOrderModel.js";
 import { MeatProduct } from "../models/meatProductModel.js";
+import { createNotification } from "./notificationController.js";
+
+// export const createMeatOrder = async (req, res) => {
+//   try {
+//     const {
+//       meatProductId,
+//       quantity,
+//       deliveryAddress,
+//       deliveryCity,
+//       deliveryZipCode,
+//       notes,
+//     } = req.body;
+
+//     // Check required fields
+//     if (!meatProductId || !quantity || !deliveryAddress) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Meat product, quantity and delivery address are required",
+//       });
+//     }
+
+//     // Check quantity
+//     if (quantity <= 0) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Quantity must be greater than 0",
+//       });
+//     }
+
+//     // Find available packaged meat product
+//     const meatProduct = await MeatProduct.findOne({
+//       _id: meatProductId,
+//       processingStatus: "processed",
+//       packagingStatus: "packaged",
+//     });
+
+//     if (!meatProduct) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Available packaged meat product not found",
+//       });
+//     }
+
+//     // Check available quantity
+//     if (quantity > meatProduct.quantity) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Requested quantity is greater than available quantity",
+//       });
+//     }
+
+//     // Calculate total price
+//     const totalPrice = quantity * meatProduct.pricePerKg;
+
+//     // Create order
+//     const order = await MeatOrder.create({
+//       superShop: req.user._id,
+//       meatProduct: meatProduct._id,
+//       quantity,
+//       pricePerKg: meatProduct.pricePerKg,
+//       totalPrice,
+//       deliveryAddress,
+//       deliveryCity: deliveryCity || "",
+//       deliveryZipCode: deliveryZipCode || "",
+//       notes: notes || "",
+//     });
+
+//     return res.status(201).json({
+//       success: true,
+//       message: "Meat order placed successfully",
+//       order,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 export const createMeatOrder = async (req, res) => {
   try {
@@ -12,7 +91,6 @@ export const createMeatOrder = async (req, res) => {
       notes,
     } = req.body;
 
-    // Check required fields
     if (!meatProductId || !quantity || !deliveryAddress) {
       return res.status(400).json({
         success: false,
@@ -20,7 +98,6 @@ export const createMeatOrder = async (req, res) => {
       });
     }
 
-    // Check quantity
     if (quantity <= 0) {
       return res.status(400).json({
         success: false,
@@ -28,7 +105,6 @@ export const createMeatOrder = async (req, res) => {
       });
     }
 
-    // Find available packaged meat product
     const meatProduct = await MeatProduct.findOne({
       _id: meatProductId,
       processingStatus: "processed",
@@ -42,18 +118,19 @@ export const createMeatOrder = async (req, res) => {
       });
     }
 
-    // Check available quantity
     if (quantity > meatProduct.quantity) {
       return res.status(400).json({
         success: false,
-        message: "Requested quantity is greater than available quantity",
+        message: `Only ${meatProduct.quantity} kg is available`,
       });
     }
 
-    // Calculate total price
     const totalPrice = quantity * meatProduct.pricePerKg;
 
-    // Create order
+    // Reduce stock
+    meatProduct.quantity -= quantity;
+    await meatProduct.save();
+
     const order = await MeatOrder.create({
       superShop: req.user._id,
       meatProduct: meatProduct._id,
@@ -70,6 +147,7 @@ export const createMeatOrder = async (req, res) => {
       success: true,
       message: "Meat order placed successfully",
       order,
+      remainingStock: meatProduct.quantity,
     });
   } catch (error) {
     return res.status(500).json({
@@ -78,6 +156,7 @@ export const createMeatOrder = async (req, res) => {
     });
   }
 };
+
 export const getMyMeatOrders = async (req, res) => {
   try {
     const orders = await MeatOrder.find({
@@ -176,7 +255,16 @@ export const updateMeatOrderStatus = async (req, res) => {
     order.status = status;
 
     await order.save();
-
+    if (status === "confirmed") {
+      await createNotification({
+        recipient: order.superShop,
+        sender: req.user._id,
+        type: "order",
+        title: "Order Confirmed",
+        message: `Your meat order ${order._id} has been confirmed.`,
+        relatedId: order._id,
+      });
+    }
     return res.status(200).json({
       success: true,
       message: "Meat order status updated successfully",

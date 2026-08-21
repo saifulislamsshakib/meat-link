@@ -1,0 +1,157 @@
+.add-livestock-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.add-livestock-card {
+  width: min(850px, 100%);
+  margin: auto;
+  padding: 35px;
+  background: #ffffff;
+  border: 1px solid #e6ebf0;
+  border-radius: 20px;
+  box-shadow: 0 15px 45px rgba(23, 32, 51, 0.07);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.page-header span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.page-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.page-header p {
+  color: #7d8797;
+  font-size: 13px;
+}
+
+.back-btn {
+  border: 1px solid #dfe5eb;
+  background: white;
+  color: #5d687a;
+  padding: 10px 15px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  color: #30394b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  padding: 12px 13px;
+  font: inherit;
+  outline: none;
+  color: #253045;
+  background: #fff;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-error,
+.form-success {
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.form-error {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.form-success {
+  background: #eaf7ef;
+  color: #16864a;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.cancel-btn,
+.save-btn {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #eef1f4;
+  color: #566174;
+}
+
+.save-btn {
+  background: #16864a;
+  color: #fff;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 650px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field.full-width {
+    grid-column: auto;
+  }
+
+  .add-livestock-card {
+    padding: 22px;
+  }
+}

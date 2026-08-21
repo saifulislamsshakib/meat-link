@@ -1,0 +1,224 @@
+.sh-meat-products-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.sh-meat-products-container {
+  width: min(1000px, 100%);
+  margin: auto;
+}
+
+.sh-meat-products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.sh-meat-products-header span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sh-meat-products-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 32px;
+}
+
+.sh-meat-products-header p {
+  color: #7d8797;
+  font-size: 14px;
+}
+
+.sh-meat-back-btn {
+  padding: 10px 16px;
+  border: 1px solid #dfe5eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #586477;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sh-meat-error,
+.sh-meat-success {
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.sh-meat-error {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.sh-meat-success {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.sh-meat-product-card {
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(23, 32, 51, 0.05);
+}
+
+.sh-meat-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.sh-meat-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sh-meat-form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.sh-meat-form-field label {
+  color: #30394b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sh-meat-form-field input,
+.sh-meat-form-field select,
+.sh-meat-form-field textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #273043;
+  font: inherit;
+}
+
+.sh-meat-form-field input:focus,
+.sh-meat-form-field select:focus,
+.sh-meat-form-field textarea:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.sh-meat-form-field input[readonly] {
+  background: #f8fafc;
+  color: #687386;
+}
+
+.sh-meat-form-field textarea {
+  resize: vertical;
+}
+
+.sh-meat-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.sh-meat-cancel-btn,
+.sh-meat-submit-btn,
+.sh-primary-btn {
+  border: none;
+  padding: 12px 19px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sh-meat-cancel-btn {
+  background: #eef1f4;
+  color: #586477;
+}
+
+.sh-meat-submit-btn,
+.sh-primary-btn {
+  background: #16864a;
+  color: #ffffff;
+}
+
+.sh-meat-submit-btn:hover,
+.sh-primary-btn:hover {
+  background: #116c3b;
+}
+
+.sh-meat-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sh-no-accepted-request {
+  padding: 65px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+}
+
+.sh-empty-icon {
+  margin-bottom: 12px;
+  font-size: 35px;
+}
+
+.sh-no-accepted-request h2 {
+  margin-bottom: 6px;
+  color: #273043;
+}
+
+.sh-no-accepted-request p {
+  margin-bottom: 18px;
+  color: #8992a2;
+  font-size: 13px;
+}
+
+.sh-meat-products-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .sh-meat-products-page {
+    padding: 105px 18px 30px;
+  }
+
+  .sh-meat-products-header {
+    flex-direction: column;
+  }
+
+  .sh-meat-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sh-meat-form-field.full-width {
+    grid-column: auto;
+  }
+
+  .sh-meat-product-card {
+    padding: 22px;
+  }
+
+  .sh-meat-actions {
+    flex-direction: column-reverse;
+  }
+
+  .sh-meat-cancel-btn,
+  .sh-meat-submit-btn {
+    width: 100%;
+  }
+}

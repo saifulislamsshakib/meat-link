@@ -1,0 +1,68 @@
+.verify-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #f6f8fa;
+}
+
+.verify-card {
+  width: min(500px, 100%);
+  padding: 40px;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+}
+
+.verify-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e9f7ef;
+  font-size: 30px;
+}
+
+.verify-card h1 {
+  margin-bottom: 10px;
+  color: #172033;
+  font-size: 28px;
+}
+
+.verify-card p {
+  color: #7d8797;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.verify-info {
+  margin: 20px 0;
+  padding: 13px;
+  border-radius: 10px;
+  background: #f5fbf7;
+  color: #16864a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.verify-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  background: #16864a;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.verify-button:hover {
+  background: #116c3b;
+}

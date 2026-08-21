@@ -1,0 +1,370 @@
+.admin-deliveries-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.admin-deliveries-container {
+  width: min(1180px, 100%);
+  margin: auto;
+}
+
+.admin-deliveries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.admin-deliveries-header > div > span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-deliveries-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 32px;
+}
+
+.admin-deliveries-header p {
+  color: #7d8797;
+  font-size: 14px;
+}
+
+.admin-deliveries-back {
+  padding: 10px 16px;
+  border: 1px solid #dfe5eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #586477;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-deliveries-error {
+  margin-bottom: 18px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #c93636;
+  font-size: 13px;
+}
+
+.admin-deliveries-summary {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-delivery-summary-card {
+  padding: 16px;
+  border: 1px solid #e7ebef;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-delivery-summary-card:hover,
+.admin-delivery-summary-card.active {
+  border-color: #16864a;
+  background: #f5fbf7;
+}
+
+.admin-delivery-summary-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: #7d8797;
+  font-size: 10px;
+}
+
+.admin-delivery-summary-card strong {
+  color: #172033;
+  font-size: 21px;
+}
+
+.admin-deliveries-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-deliveries-filters input,
+.admin-deliveries-filters select {
+  padding: 11px 12px;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #273043;
+  outline: none;
+  font: inherit;
+}
+
+.admin-deliveries-filters input {
+  flex: 1;
+}
+
+.admin-deliveries-filters select {
+  width: 190px;
+}
+
+.admin-deliveries-filters input:focus,
+.admin-deliveries-filters select:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.admin-deliveries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-delivery-card {
+  padding: 24px;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(23, 32, 51, 0.04);
+}
+
+.admin-delivery-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.admin-delivery-label {
+  color: #16864a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.admin-delivery-card-header h2 {
+  margin: 6px 0 4px;
+  color: #172033;
+  font-size: 20px;
+}
+
+.admin-delivery-card-header p {
+  color: #8992a2;
+  font-size: 10px;
+  word-break: break-all;
+}
+
+.admin-delivery-status {
+  display: inline-flex;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.admin-delivery-status.assigned {
+  background: #fff6df;
+  color: #a76b00;
+}
+
+.admin-delivery-status.accepted {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.admin-delivery-status.picked_up {
+  background: #eef3ff;
+  color: #4169b3;
+}
+
+.admin-delivery-status.in_transit {
+  background: #f4edff;
+  color: #7950a8;
+}
+
+.admin-delivery-status.delivered {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.admin-delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.admin-delivery-grid span,
+.admin-delivery-notes span {
+  display: block;
+  margin-bottom: 6px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.admin-delivery-grid strong {
+  display: block;
+  color: #273043;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+.admin-delivery-grid small {
+  display: block;
+  margin-top: 4px;
+  color: #8992a2;
+  font-size: 9px;
+  word-break: break-word;
+}
+
+.admin-delivery-total {
+  color: #16864a !important;
+}
+
+.admin-delivery-notes {
+  padding: 14px;
+  border-radius: 11px;
+  background: #f8fafc;
+}
+
+.admin-delivery-notes p {
+  color: #667184;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-delivery-progress {
+  display: flex;
+  align-items: center;
+  margin-top: 22px;
+  gap: 6px;
+}
+
+.admin-progress-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.admin-progress-step {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #a0a8b5;
+}
+
+.admin-progress-step span {
+  width: 9px;
+  height: 9px;
+  border: 2px solid #d9dee4;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.admin-progress-step small {
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.admin-progress-step.done {
+  color: #16864a;
+}
+
+.admin-progress-step.done span {
+  border-color: #16864a;
+  background: #16864a;
+}
+
+.admin-progress-line {
+  flex: 1;
+  height: 2px;
+  margin: 0 5px;
+  background: #e2e6eb;
+}
+
+.admin-progress-line.done {
+  background: #16864a;
+}
+
+.admin-deliveries-empty {
+  padding: 65px 20px;
+  text-align: center;
+  border: 1px solid #e7ebef;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.admin-deliveries-empty div {
+  margin-bottom: 12px;
+  font-size: 35px;
+}
+
+.admin-deliveries-empty h2 {
+  margin-bottom: 6px;
+  color: #273043;
+}
+
+.admin-deliveries-empty p {
+  color: #8992a2;
+  font-size: 13px;
+}
+
+.admin-deliveries-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+  .admin-deliveries-summary {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .admin-delivery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .admin-deliveries-page {
+    padding: 105px 18px 30px;
+  }
+
+  .admin-deliveries-header {
+    flex-direction: column;
+  }
+
+  .admin-deliveries-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-deliveries-filters {
+    flex-direction: column;
+  }
+
+  .admin-deliveries-filters select {
+    width: 100%;
+  }
+
+  .admin-delivery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-delivery-progress {
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+
+  .admin-progress-wrapper {
+    min-width: 120px;
+  }
+}

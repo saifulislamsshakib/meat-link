@@ -283,3 +283,23 @@ export const updateLivestockAvailability = async (req, res) => {
     });
   }
 };
+export const getAvailableLivestock = async (req, res) => {
+  try {
+    const livestock = await Livestock.find({
+      availableQuantity: { $gt: 0 },
+    })
+      .populate("farmer", "firstName lastName email")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: livestock.length,
+      livestock,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

@@ -1,0 +1,281 @@
+.sh-procurement-requests-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.sh-procurement-requests-container {
+  width: min(1100px, 100%);
+  margin: auto;
+}
+
+.sh-procurement-requests-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.sh-procurement-requests-header > div:first-child > span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sh-procurement-requests-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 32px;
+}
+
+.sh-procurement-requests-header p {
+  color: #7d8797;
+  font-size: 14px;
+}
+
+.sh-procurement-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sh-secondary-btn,
+.sh-back-dashboard-btn,
+.sh-primary-btn {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sh-secondary-btn {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.sh-back-dashboard-btn {
+  background: #ffffff;
+  border: 1px solid #dfe5eb;
+  color: #586477;
+}
+
+.sh-procurement-requests-error {
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #c93636;
+  font-size: 13px;
+}
+
+.sh-procurement-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sh-procurement-summary-card {
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 15px;
+  box-shadow: 0 7px 20px rgba(23, 32, 51, 0.04);
+}
+
+.sh-procurement-summary-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: #7d8797;
+  font-size: 11px;
+}
+
+.sh-procurement-summary-card strong {
+  color: #172033;
+  font-size: 24px;
+}
+
+.sh-procurement-request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sh-procurement-request-card {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(23, 32, 51, 0.05);
+}
+
+.sh-request-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.sh-request-label {
+  color: #16864a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sh-request-top h2 {
+  margin: 6px 0 3px;
+  color: #172033;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.sh-request-top p {
+  color: #8992a2;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.sh-procurement-status {
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.sh-procurement-status.pending {
+  background: #fff6df;
+  color: #a76b00;
+}
+
+.sh-procurement-status.accepted {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.sh-procurement-status.rejected {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.sh-request-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.sh-request-grid > div > span,
+.sh-request-message > span {
+  display: block;
+  margin-bottom: 6px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.sh-request-grid strong {
+  display: block;
+  color: #273043;
+  font-size: 13px;
+}
+
+.sh-request-grid small {
+  display: block;
+  margin-top: 4px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.green-price {
+  color: #16864a !important;
+}
+
+.sh-request-message {
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 11px;
+}
+
+.sh-request-message p {
+  color: #667184;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.sh-no-procurement-requests {
+  padding: 65px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+}
+
+.sh-no-request-icon {
+  margin-bottom: 12px;
+  font-size: 35px;
+}
+
+.sh-no-procurement-requests h2 {
+  margin-bottom: 6px;
+  color: #273043;
+}
+
+.sh-no-procurement-requests p {
+  margin-bottom: 18px;
+  color: #8992a2;
+  font-size: 13px;
+}
+
+.sh-primary-btn {
+  background: #16864a;
+  color: #ffffff;
+}
+
+.sh-procurement-requests-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 850px) {
+  .sh-procurement-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sh-request-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .sh-procurement-requests-page {
+    padding: 105px 18px 30px;
+  }
+
+  .sh-procurement-requests-header {
+    flex-direction: column;
+  }
+
+  .sh-procurement-header-actions {
+    width: 100%;
+  }
+
+  .sh-secondary-btn,
+  .sh-back-dashboard-btn {
+    flex: 1;
+  }
+
+  .sh-procurement-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .sh-request-grid {
+    grid-template-columns: 1fr;
+  }
+}

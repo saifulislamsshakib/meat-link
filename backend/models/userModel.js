@@ -13,8 +13,23 @@ const userSchema = new mongoose.Schema(
       default: "super_shop",
     },
     token: { type: String, default: null },
-    isVarified: { type: Boolean, default: false },
-    isLoggedIn: { type: Boolean, default: false },
+    // isVarified: { type: Boolean, default: false },
+    // isLoggedIn: { type: Boolean, default: false },
+    isVarified: {
+      type: Boolean,
+      default: false,
+    },
+
+    accountStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
     otp: { type: String, default: null },
     otpExpiry: { type: Date, default: null },
     address: { type: String },

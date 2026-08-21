@@ -239,11 +239,35 @@ export const updatePackagingStatus = async (req, res) => {
     });
   }
 };
+// export const getAvailableMeatProducts = async (req, res) => {
+//   try {
+//     const products = await MeatProduct.find({
+//       processingStatus: "processed",
+//       packagingStatus: "packaged",
+//     })
+//       .populate("slaughterhouse", "firstName lastName email")
+//       .sort({ createdAt: -1 });
+
+//     return res.status(200).json({
+//       success: true,
+//       count: products.length,
+//       products,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const getAvailableMeatProducts = async (req, res) => {
   try {
     const products = await MeatProduct.find({
       processingStatus: "processed",
       packagingStatus: "packaged",
+      isArchived: false,
+      quantity: { $gt: 0 },
     })
       .populate("slaughterhouse", "firstName lastName email")
       .sort({ createdAt: -1 });
@@ -252,6 +276,92 @@ export const getAvailableMeatProducts = async (req, res) => {
       success: true,
       count: products.length,
       products,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const getMyMeatProducts = async (req, res) => {
+  try {
+    const products = await MeatProduct.find({
+      slaughterhouse: req.user._id,
+    })
+      .populate(
+        "procurementRequest",
+        "requestedQuantity pricePerAnimal totalPrice status",
+      )
+      .populate(
+        "sourceLivestock",
+        "animalType breed quantity availableQuantity",
+      )
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: products.length,
+      products,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const archiveMeatProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const meatProduct = await MeatProduct.findOne({
+      _id: id,
+      slaughterhouse: req.user._id,
+    });
+
+    if (!meatProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Meat product not found",
+      });
+    }
+
+    if (meatProduct.isArchived) {
+      return res.status(400).json({
+        success: false,
+        message: "Meat product is already archived",
+      });
+    }
+
+    // Product should be packaged before archive
+    if (
+      meatProduct.processingStatus !== "processed" ||
+      meatProduct.packagingStatus !== "packaged"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Only processed and packaged products can be archived",
+      });
+    }
+
+    // Do not archive while stock is still available
+    if (meatProduct.quantity > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Product can only be archived when available quantity is 0",
+      });
+    }
+
+    meatProduct.isArchived = true;
+
+    await meatProduct.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Meat product archived successfully",
+      meatProduct,
     });
   } catch (error) {
     return res.status(500).json({

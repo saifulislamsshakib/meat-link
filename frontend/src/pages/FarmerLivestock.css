@@ -1,0 +1,324 @@
+.farmer-livestock-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.farmer-livestock-container {
+  width: min(1100px, 100%);
+  margin: auto;
+}
+
+.farmer-livestock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.farmer-livestock-label {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.farmer-livestock-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 32px;
+}
+
+.farmer-livestock-header p {
+  color: #7d8797;
+  font-size: 14px;
+}
+
+.farmer-livestock-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.farmer-back-btn,
+.farmer-add-btn {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.farmer-back-btn {
+  border: 1px solid #dfe5eb;
+  background: #fff;
+  color: #586477;
+}
+
+.farmer-add-btn {
+  border: none;
+  background: #16864a;
+  color: #fff;
+}
+
+.farmer-livestock-error {
+  margin-bottom: 18px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #c93636;
+  font-size: 12px;
+}
+
+.farmer-livestock-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.farmer-summary-card {
+  padding: 19px;
+  border: 1px solid #e7ebef;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.farmer-summary-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: #7d8797;
+  font-size: 11px;
+}
+
+.farmer-summary-card strong {
+  color: #172033;
+  font-size: 24px;
+}
+
+.farmer-summary-card .green {
+  color: #16864a;
+}
+
+.farmer-livestock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.farmer-livestock-card {
+  padding: 22px;
+  border: 1px solid #e7ebef;
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(23, 32, 51, 0.04);
+}
+
+.farmer-livestock-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.farmer-animal-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background: #e9f7ef;
+  font-size: 23px;
+}
+
+.farmer-animal-title {
+  flex: 1;
+}
+
+.farmer-animal-title span {
+  color: #16864a;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.farmer-animal-title h2 {
+  margin-top: 3px;
+  color: #172033;
+  font-size: 19px;
+}
+
+.farmer-status {
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.farmer-status.available {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.farmer-status.partially_available {
+  background: #fff6df;
+  color: #a76b00;
+}
+
+.farmer-status.sold,
+.farmer-status.unavailable {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.farmer-livestock-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 20px 0;
+}
+
+.farmer-livestock-grid span,
+.farmer-livestock-description span {
+  display: block;
+  margin-bottom: 5px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.farmer-livestock-grid strong {
+  color: #273043;
+  font-size: 12px;
+}
+
+.green-text {
+  color: #16864a !important;
+}
+
+.farmer-livestock-description {
+  padding: 14px;
+  border-radius: 11px;
+  background: #f8fafc;
+}
+
+.farmer-livestock-description p {
+  color: #586477;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.farmer-livestock-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.farmer-livestock-footer select {
+  padding: 9px 11px;
+  border: 1px solid #dfe5ec;
+  border-radius: 9px;
+  background: #fff;
+  color: #273043;
+  font-size: 11px;
+}
+
+.farmer-edit-btn {
+  border: 1px solid #dfe5eb;
+  padding: 9px 13px;
+  border-radius: 9px;
+  background: #fff;
+  color: #586477;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.farmer-livestock-empty {
+  padding: 65px 20px;
+  border: 1px solid #e7ebef;
+  border-radius: 16px;
+  background: #fff;
+  text-align: center;
+}
+
+.farmer-livestock-empty div {
+  margin-bottom: 10px;
+  font-size: 38px;
+}
+
+.farmer-livestock-empty h2 {
+  color: #273043;
+  margin-bottom: 6px;
+}
+
+.farmer-livestock-empty p {
+  color: #8992a2;
+  font-size: 12px;
+}
+
+.farmer-livestock-empty button {
+  margin-top: 15px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 9px;
+  background: #16864a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.farmer-livestock-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .farmer-livestock-page {
+    padding: 105px 18px 30px;
+  }
+
+  .farmer-livestock-header {
+    flex-direction: column;
+  }
+
+  .farmer-livestock-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .farmer-livestock-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .farmer-livestock-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .farmer-livestock-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.farmer-delete-btn {
+  border: none;
+  padding: 9px 13px;
+  border-radius: 9px;
+  background: #fff1f1;
+  color: #c93636;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.farmer-delete-btn:hover {
+  background: #ffe4e4;
+}

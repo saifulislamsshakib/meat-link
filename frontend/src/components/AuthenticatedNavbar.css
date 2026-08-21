@@ -1,0 +1,181 @@
+.auth-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 76px;
+  z-index: 200;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid #e7ebef;
+}
+
+.auth-navbar-container {
+  width: min(1400px, 94%);
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  color: #172033;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.auth-brand-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+  background: #eaf7ef;
+
+  font-size: 20px;
+}
+
+.auth-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-dashboard-btn,
+.notification-btn,
+.auth-logout-btn {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.auth-dashboard-btn {
+  padding: 10px 15px;
+  border-radius: 9px;
+  background: #f2f5f7;
+  color: #4f5b6e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.auth-dashboard-btn:hover {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.notification-btn {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+  background: #f6f8fa;
+
+  font-size: 17px;
+}
+
+.notification-btn:hover {
+  background: #e9f7ef;
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 7px 12px 7px 7px;
+
+  background: #ffffff;
+  border: 1px solid #e7ebef;
+  border-radius: 12px;
+}
+
+.auth-user-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #16864a;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.auth-user-info strong {
+  display: block;
+  color: #273043;
+  font-size: 12px;
+}
+
+.auth-user-info span {
+  display: block;
+  margin-top: 2px;
+
+  color: #8992a2;
+  font-size: 10px;
+  text-transform: capitalize;
+}
+
+.auth-logout-btn {
+  padding: 10px 15px;
+  border-radius: 9px;
+
+  background: #fff1f1;
+  color: #c93636;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.auth-logout-btn:hover {
+  background: #ffe3e3;
+}
+
+@media (max-width: 800px) {
+  .auth-user-info {
+    display: none;
+  }
+
+  .auth-dashboard-btn {
+    display: none;
+  }
+
+  .auth-navbar-container {
+    width: 94%;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-brand {
+    font-size: 19px;
+  }
+
+  .auth-brand-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .auth-logout-btn {
+    padding: 9px 11px;
+  }
+}

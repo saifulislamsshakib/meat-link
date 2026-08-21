@@ -1,6 +1,7 @@
 import { ProcurementRequest } from "../models/procurementRequestModel.js";
 import { Livestock } from "../models/livestockModel.js";
 import { User } from "../models/userModel.js";
+import { createNotification } from "./notificationController.js";
 
 export const createProcurementRequest = async (req, res) => {
   try {
@@ -58,6 +59,14 @@ export const createProcurementRequest = async (req, res) => {
       pricePerAnimal: livestock.pricePerAnimal,
       totalPrice,
       message: message || "",
+    });
+    await createNotification({
+      recipient: farmerId,
+      sender: req.user._id,
+      type: "procurement",
+      title: "New Procurement Request",
+      message: `A slaughterhouse requested ${requestedQuantity} ${livestock.animalType}.`,
+      relatedId: procurementRequest._id,
     });
 
     return res.status(201).json({

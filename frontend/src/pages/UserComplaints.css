@@ -1,0 +1,254 @@
+.user-complaints-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.user-complaints-container {
+  width: min(900px, 100%);
+  margin: auto;
+}
+
+.user-complaints-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.user-complaints-header span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.user-complaints-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.user-complaints-header p {
+  color: #7d8797;
+  font-size: 13px;
+}
+
+.user-complaints-back {
+  border: 1px solid #dfe5eb;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #586477;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-complaints-error,
+.user-complaints-success {
+  margin-bottom: 18px;
+  padding: 14px 15px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.user-complaints-error {
+  background: #fff1f1;
+  color: #c93636;
+}
+
+.user-complaints-success {
+  background: #e9f7ef;
+  color: #16864a;
+}
+
+.user-complaints-success p {
+  margin: 3px 0;
+}
+
+.user-complaints-success small {
+  color: #586477;
+}
+
+.user-complaint-card {
+  padding: 28px;
+  border: 1px solid #e7ebef;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(23, 32, 51, 0.05);
+}
+
+.user-complaint-card-header {
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.user-complaint-card-header span {
+  color: #16864a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.user-complaint-card-header h2 {
+  margin-top: 5px;
+  color: #172033;
+  font-size: 20px;
+}
+
+.user-complaint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.user-complaint-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.user-complaint-field label {
+  color: #30394b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.user-complaint-field input,
+.user-complaint-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #dfe5ec;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #273043;
+  font: inherit;
+}
+
+.user-complaint-field input:focus,
+.user-complaint-field textarea:focus {
+  border-color: #16864a;
+  box-shadow: 0 0 0 4px rgba(22, 134, 74, 0.08);
+}
+
+.user-complaint-field textarea {
+  resize: vertical;
+}
+
+.user-complaint-field small {
+  color: #8992a2;
+  font-size: 9px;
+}
+
+.user-complaint-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.user-complaint-cancel,
+.user-complaint-submit {
+  padding: 11px 16px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-complaint-cancel {
+  border: 1px solid #dfe5eb;
+  background: #ffffff;
+  color: #586477;
+}
+
+.user-complaint-submit {
+  border: none;
+  background: #16864a;
+  color: #ffffff;
+}
+
+.user-complaint-submit:hover {
+  background: #116c3b;
+}
+
+.user-complaint-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.user-complaint-info {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid #e7ebef;
+  border-radius: 15px;
+  background: #ffffff;
+}
+
+.user-complaint-info > span {
+  color: #172033;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.user-complaint-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.user-complaint-steps div {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.user-complaint-steps strong {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e9f7ef;
+  color: #16864a;
+  font-size: 10px;
+}
+
+.user-complaint-steps p {
+  color: #7d8797;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .user-complaints-page {
+    padding: 105px 18px 30px;
+  }
+
+  .user-complaints-header {
+    flex-direction: column;
+  }
+
+  .user-complaint-card {
+    padding: 20px;
+  }
+
+  .user-complaint-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .user-complaint-actions {
+    flex-direction: column-reverse;
+  }
+
+  .user-complaint-actions button {
+    width: 100%;
+  }
+}
