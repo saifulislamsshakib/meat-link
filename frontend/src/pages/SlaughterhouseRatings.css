@@ -1,0 +1,229 @@
+.slaughterhouse-ratings-page {
+  min-height: 100vh;
+  padding: 120px 30px 50px;
+  background: #f6f8fa;
+}
+
+.slaughterhouse-ratings-container {
+  width: min(1100px, 100%);
+  margin: auto;
+}
+
+.slaughterhouse-ratings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.slaughterhouse-ratings-header span {
+  color: #16864a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.slaughterhouse-ratings-header h1 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.slaughterhouse-ratings-header p {
+  color: #7d8797;
+  font-size: 13px;
+}
+
+.slaughterhouse-ratings-back {
+  padding: 10px 15px;
+  border: 1px solid #dfe5eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #586477;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.slaughterhouse-ratings-error {
+  margin-bottom: 18px;
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #c93636;
+  font-size: 12px;
+}
+
+.slaughterhouse-rating-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.slaughterhouse-rating-summary-card {
+  padding: 22px;
+  border: 1px solid #e7ebef;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.slaughterhouse-rating-summary-card span {
+  display: block;
+  margin-bottom: 7px;
+  color: #7d8797;
+  font-size: 11px;
+}
+
+.slaughterhouse-rating-summary-card strong {
+  color: #16864a;
+  font-size: 27px;
+}
+
+.slaughterhouse-ratings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.slaughterhouse-rating-card {
+  padding: 22px;
+  border: 1px solid #e7ebef;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(23, 32, 51, 0.04);
+}
+
+.slaughterhouse-rating-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.rating-card-label {
+  color: #16864a;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.slaughterhouse-rating-card-header h2 {
+  margin: 5px 0 3px;
+  color: #172033;
+  font-size: 18px;
+}
+
+.slaughterhouse-rating-card-header p {
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.rating-stars-view {
+  display: flex;
+  gap: 2px;
+  font-size: 23px;
+}
+
+.rating-stars-view .filled {
+  color: #f5b301;
+}
+
+.rating-stars-view .empty {
+  color: #d4d9df;
+}
+
+.rating-feedback-box {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 11px;
+  background: #f8fafc;
+}
+
+.rating-feedback-box span {
+  display: block;
+  margin-bottom: 5px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.rating-feedback-box p {
+  color: #586477;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.rating-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0f4;
+}
+
+.rating-meta span {
+  display: block;
+  margin-bottom: 5px;
+  color: #8992a2;
+  font-size: 9px;
+}
+
+.rating-meta strong {
+  color: #273043;
+  font-size: 11px;
+  word-break: break-word;
+}
+
+.slaughterhouse-ratings-empty {
+  padding: 70px 20px;
+  border: 1px solid #e7ebef;
+  border-radius: 16px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.slaughterhouse-ratings-empty div {
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+
+.slaughterhouse-ratings-empty h2 {
+  margin-bottom: 6px;
+  color: #273043;
+}
+
+.slaughterhouse-ratings-empty p {
+  color: #8992a2;
+  font-size: 12px;
+}
+
+.slaughterhouse-ratings-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16864a;
+  font-weight: 700;
+}
+
+@media (max-width: 750px) {
+  .slaughterhouse-ratings-page {
+    padding: 105px 18px 30px;
+  }
+
+  .slaughterhouse-ratings-header {
+    flex-direction: column;
+  }
+
+  .slaughterhouse-rating-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .slaughterhouse-rating-card-header {
+    flex-direction: column;
+  }
+
+  .rating-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

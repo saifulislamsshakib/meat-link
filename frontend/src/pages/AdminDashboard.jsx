@@ -296,6 +296,9 @@ function AdminDashboard() {
             <button type="button" onClick={() => navigate("/admin/reports")}>
               📊 View Reports
             </button>
+            <button type="button" onClick={() => navigate("/admin/ratings")}>
+              ⭐ Ratings
+            </button>
           </div>
         </section>
       </div>

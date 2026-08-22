@@ -82,6 +82,7 @@ function SlaughterhouseDashboard() {
 
           <a onClick={() => navigate("/slaughterhouse/reports")}>Reports</a> */}
           <a onClick={() => navigate("/complaints")}>Complaints</a>
+          <a onClick={() => navigate("/slaughterhouse/ratings")}>Ratings</a>
         </nav>
       </aside>
 

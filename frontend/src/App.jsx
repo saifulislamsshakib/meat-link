@@ -231,6 +231,8 @@ import AdminComplaints from "./pages/AdminComplaints";
 
 /* Common */
 import UserComplaints from "./pages/UserComplaints";
+import SlaughterhouseRatings from "./pages/SlaughterhouseRatings";
+import AdminRatings from "./pages/AdminRatings";
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -317,6 +319,10 @@ function App() {
             path="/slaughterhouse/deliveries"
             element={<SlaughterhouseDeliveries />}
           />
+          <Route
+            path="/slaughterhouse/ratings"
+            element={<SlaughterhouseRatings />}
+          />
         </Route>
 
         {/* =========================
@@ -384,6 +390,7 @@ function App() {
           <Route path="/admin/reports" element={<AdminReports />} />
 
           <Route path="/admin/complaints" element={<AdminComplaints />} />
+          <Route path="/admin/ratings" element={<AdminRatings />} />
         </Route>
       </Routes>
     </>
