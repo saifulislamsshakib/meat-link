@@ -67,7 +67,6 @@ function FarmerDashboard() {
           <a onClick={() => navigate("/farmer/notifications")}>Notifications</a>
 
           <a onClick={() => navigate("/farmer/transactions")}>Transactions</a>
-          {/* <a onClick={() => navigate("/complaints")}>Complaints</a> */}
         </nav>
 
         <button className="logout-btn" onClick={logout}>

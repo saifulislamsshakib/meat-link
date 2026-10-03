@@ -281,7 +281,6 @@ function AdminReports() {
           </div>
         </section>
 
-        {/* Quick Navigation */}
         <section className="admin-report-section">
           <div className="admin-report-section-header">
             <div>

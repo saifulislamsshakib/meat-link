@@ -242,10 +242,6 @@ function App() {
       {isAuthenticated ? <AuthenticatedNavbar /> : <Navbar />}
 
       <Routes>
-        {/* =========================
-            Public Routes
-        ========================= */}
-
         <Route path="/" element={<Login />} />
 
         <Route path="/login" element={<Login />} />
@@ -254,9 +250,7 @@ function App() {
 
         <Route path="/verify/:token" element={<VerifyEmail />} />
 
-        {/* =========================
-            Farmer Routes
-        ========================= */}
+        {/* Farmer Routes */}
 
         <Route element={<ProtectedRoute allowedRoles={["farmer"]} />}>
           <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
@@ -279,10 +273,6 @@ function App() {
 
           <Route path="/farmer/transactions" element={<FarmerTransactions />} />
         </Route>
-
-        {/* =========================
-            Slaughterhouse Routes
-        ========================= */}
 
         <Route element={<ProtectedRoute allowedRoles={["slaughterhouse"]} />}>
           <Route
@@ -325,10 +315,6 @@ function App() {
           />
         </Route>
 
-        {/* =========================
-            Super Shop Routes
-        ========================= */}
-
         <Route element={<ProtectedRoute allowedRoles={["super_shop"]} />}>
           <Route
             path="/super-shop/dashboard"
@@ -347,17 +333,13 @@ function App() {
           <Route path="/super-shop/invoices" element={<SuperShopInvoices />} />
         </Route>
 
-        {/* =========================
-            Driver Routes
-        ========================= */}
+        {/* Driver Routes */}
 
         <Route element={<ProtectedRoute allowedRoles={["driver"]} />}>
           <Route path="/driver/dashboard" element={<DriverDashboard />} />
         </Route>
 
-        {/* =========================
-            Common User Complaint
-        ========================= */}
+        {/* Common User Complaint */}
 
         <Route
           element={

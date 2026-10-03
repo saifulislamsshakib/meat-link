@@ -297,7 +297,6 @@ function AdminUsers() {
 
                 return (
                   <div className="admin-user-row" key={user._id}>
-                    {/* User */}
                     <div className="admin-user-cell user-main">
                       <div className="admin-user-avatar">
                         {user.firstName?.charAt(0)?.toUpperCase() || "U"}
@@ -312,12 +311,10 @@ function AdminUsers() {
                       </div>
                     </div>
 
-                    {/* Email */}
                     <div className="admin-user-cell">
                       <span>{user.email || "N/A"}</span>
                     </div>
 
-                    {/* Role */}
                     <div className="admin-user-cell">
                       <span className={`admin-role-badge ${user.role}`}>
                         {getRoleLabel(user.role)}
