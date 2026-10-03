@@ -92,34 +92,34 @@ Note: Use demo/test accounts only. Do not use personal account credentials for p
 👨‍🌾 Farmer Demo Account
 
 Email:
-ADD_FARMER_DEMO_EMAIL_HERE
+nazrulmastertv@gmail.com
 
 Password:
-ADD_FARMER_DEMO_PASSWORD_HERE
+123456
 
 🥩 Slaughterhouse Demo Account
 
 Email:
-ADD_SLAUGHTERHOUSE_DEMO_EMAIL_HERE
+saifulislamsshakib@gmail.com
 
 Password:
-ADD_SLAUGHTERHOUSE_DEMO_PASSWORD_HERE
+shakib#123
 
 🚚 Driver Demo Account
 
 Email:
-ADD_DRIVER_DEMO_EMAIL_HERE
+1001215@daffodil.ac
 
 Password:
-ADD_DRIVER_DEMO_PASSWORD_HERE
+123456
 
 🛒 Super Shop Demo Account
 
 Email:
-ADD_SUPER_SHOP_DEMO_EMAIL_HERE
+saifulislamshakibbb@gmail.com
 
 Password:
-ADD_SUPER_SHOP_DEMO_PASSWORD_HERE
+shakib#123
 
 
 
