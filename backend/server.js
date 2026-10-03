@@ -14,11 +14,12 @@ import notificationRoute from "./routes/notificationRoute.js";
 import adminRoute from "./routes/adminRoute.js";
 import complaintRoute from "./routes/complaintRoute.js";
 import ratingRoute from "./routes/ratingRoute.js";
-const app = express();
-const PORT = process.env.PORT || 3000;
 
-//middleware
+const app = express();
+
+// Middleware
 app.use(express.json());
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -26,8 +27,8 @@ app.use(
   }),
 );
 
+// Routes
 app.use("/api/v1/user", userRoute);
-
 app.use("/api/v1/test", testRoute);
 app.use("/api/v1/livestock", livestockRoute);
 app.use("/api/v1/procurement-requests", procurementRequestRoute);
@@ -39,7 +40,9 @@ app.use("/api/v1/notifications", notificationRoute);
 app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/complaints", complaintRoute);
 app.use("/api/v1/ratings", ratingRoute);
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server is listining at port:${PORT}`);
-});
+
+// Database
+connectDB();
+
+// Export Express app for Vercel
+export default app;
