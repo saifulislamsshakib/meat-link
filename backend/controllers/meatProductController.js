@@ -96,48 +96,6 @@ export const createMeatProduct = async (req, res) => {
     });
   }
 };
-// export const updateProcessingStatus = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { processingStatus } = req.body;
-
-//     const allowedStatuses = ["pending", "processing", "processed"];
-
-//     if (!allowedStatuses.includes(processingStatus)) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "Invalid processing status",
-//       });
-//     }
-
-//     const meatProduct = await MeatProduct.findOne({
-//       _id: id,
-//       slaughterhouse: req.user._id,
-//     });
-
-//     if (!meatProduct) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Meat product not found",
-//       });
-//     }
-
-//     meatProduct.processingStatus = processingStatus;
-
-//     await meatProduct.save();
-
-//     return res.status(200).json({
-//       success: true,
-//       message: "Processing status updated successfully",
-//       meatProduct,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
 
 export const updateProcessingStatus = async (req, res) => {
   try {
@@ -239,27 +197,6 @@ export const updatePackagingStatus = async (req, res) => {
     });
   }
 };
-// export const getAvailableMeatProducts = async (req, res) => {
-//   try {
-//     const products = await MeatProduct.find({
-//       processingStatus: "processed",
-//       packagingStatus: "packaged",
-//     })
-//       .populate("slaughterhouse", "firstName lastName email")
-//       .sort({ createdAt: -1 });
-
-//     return res.status(200).json({
-//       success: true,
-//       count: products.length,
-//       products,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
 
 export const getAvailableMeatProducts = async (req, res) => {
   try {

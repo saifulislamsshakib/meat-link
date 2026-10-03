@@ -12,7 +12,6 @@ export const addLivestock = async (req, res) => {
       description,
     } = req.body;
 
-    // Check required fields
     if (
       !animalType ||
       !breed ||

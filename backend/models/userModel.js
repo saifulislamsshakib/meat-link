@@ -13,8 +13,7 @@ const userSchema = new mongoose.Schema(
       default: "super_shop",
     },
     token: { type: String, default: null },
-    // isVarified: { type: Boolean, default: false },
-    // isLoggedIn: { type: Boolean, default: false },
+
     isVarified: {
       type: Boolean,
       default: false,

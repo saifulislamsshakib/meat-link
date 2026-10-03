@@ -79,7 +79,6 @@ export const assignDriver = async (req, res) => {
       });
     }
 
-    // Check if delivery already exists
     const existingDelivery = await Delivery.findOne({
       order: order._id,
     });

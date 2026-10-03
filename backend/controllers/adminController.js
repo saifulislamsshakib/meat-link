@@ -22,49 +22,6 @@ export const getAllUsers = async (req, res) => {
     });
   }
 };
-// export const approveUser = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const user = await User.findById(id);
-
-//     if (!user) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "User not found",
-//       });
-//     }
-
-//     if (user.isVarified) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "User is already verified",
-//       });
-//     }
-
-//     user.isVarified = true;
-
-//     await user.save();
-
-//     return res.status(200).json({
-//       success: true,
-//       message: "User approved successfully",
-//       user: {
-//         _id: user._id,
-//         firstName: user.firstName,
-//         lastName: user.lastName,
-//         email: user.email,
-//         role: user.role,
-//         isVarified: user.isVarified,
-//       },
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
 
 export const approveUser = async (req, res) => {
   try {
