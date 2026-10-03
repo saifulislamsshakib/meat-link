@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://meat-link-backend.vercel.app",
+  baseURL: "https://meat-link-backend.vercel.app/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
