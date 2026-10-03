@@ -233,13 +233,13 @@ function SlaughterhouseProductManagement() {
           </div>
 
           <div className="product-header-actions">
-            <button
+            {/* <button
               type="button"
               className="new-product-btn"
               onClick={() => navigate("/slaughterhouse/products")}
             >
               + Create Product
-            </button>
+            </button> */}
 
             <button
               type="button"
