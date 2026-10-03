@@ -519,3 +519,42 @@ export const getUserById = async (req, res) => {
     });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { firstName, lastName, phoneNo, address, city, zipCode } = req.body;
+
+    const user = await User.findById(req.user._id).select(
+      "-password -otp -otpExpiry -token",
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    user.firstName = firstName?.trim() || user.firstName;
+    user.lastName = lastName?.trim() || user.lastName;
+    user.phoneNo = phoneNo?.trim() || "";
+    user.address = address?.trim() || "";
+    user.city = city?.trim() || "";
+    user.zipCode = zipCode?.trim() || "";
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error("Update profile error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

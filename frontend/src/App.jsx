@@ -26,6 +26,7 @@ import SlaughterhouseProcurementRequests from "./pages/SlaughterhouseProcurement
 import SlaughterhouseMeatProducts from "./pages/SlaughterhouseMeatProducts";
 import SlaughterhouseProductManagement from "./pages/SlaughterhouseProductManagement";
 import SlaughterhouseDeliveries from "./pages/SlaughterhouseDeliveries";
+import SlaughterhouseProfile from "./pages/SlaughterhouseProfile";
 
 /* Super Shop */
 import SuperShopDashboard from "./pages/SuperShopDashboard";
@@ -119,6 +120,10 @@ function App() {
           <Route
             path="/slaughterhouse/product-management"
             element={<SlaughterhouseProductManagement />}
+          />
+          <Route
+            path="/slaughterhouse/profile"
+            element={<SlaughterhouseProfile />}
           />
 
           <Route

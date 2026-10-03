@@ -8,6 +8,7 @@ import {
   logout,
   register,
   reVerify,
+  updateProfile,
   verify,
   verifyOTP,
 } from "../controllers/userController.js";
@@ -21,6 +22,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/verify", verify);
 router.post("/reverify", reVerify);
+router.put("/profile", isAuthenticated, updateProfile);
 router.post("/login", login);
 router.post("/logout", isAuthenticated, logout);
 router.post("/forgot-password", isAuthenticated, forgotPassword);
