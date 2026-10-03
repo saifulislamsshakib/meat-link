@@ -29,8 +29,8 @@ function SlaughterhouseMeatProducts() {
           "/procurement-requests/my-sent-requests",
         );
 
-        const acceptedRequests = (response.data.requests || []).filter(
-          (request) => request.status === "accepted",
+        const completedRequests = (response.data.requests || []).filter(
+          (request) => request.status === "completed",
         );
 
         setRequests(acceptedRequests);

@@ -13,7 +13,6 @@ export const createMeatProduct = async (req, res) => {
       description,
     } = req.body;
 
-    // Check required fields
     if (
       !procurementRequestId ||
       !productName ||
@@ -27,7 +26,6 @@ export const createMeatProduct = async (req, res) => {
       });
     }
 
-    // Find accepted procurement request
     const procurementRequest = await ProcurementRequest.findOne({
       _id: procurementRequestId,
       slaughterhouse: req.user._id,
@@ -40,15 +38,15 @@ export const createMeatProduct = async (req, res) => {
       });
     }
 
-    // Only accepted requests can be processed
-    if (procurementRequest.status !== "accepted") {
+    // Livestock must actually be delivered to slaughterhouse
+    if (procurementRequest.status !== "completed") {
       return res.status(400).json({
         success: false,
-        message: "Only accepted procurement requests can be processed",
+        message:
+          "Only completed procurement requests can be processed into meat products",
       });
     }
 
-    // Check if a meat product was already created
     const existingProduct = await MeatProduct.findOne({
       procurementRequest: procurementRequestId,
     });
@@ -60,7 +58,6 @@ export const createMeatProduct = async (req, res) => {
       });
     }
 
-    // Find source livestock
     const livestock = await Livestock.findOne({
       _id: procurementRequest.livestock,
       farmer: procurementRequest.farmer,
@@ -77,11 +74,14 @@ export const createMeatProduct = async (req, res) => {
       slaughterhouse: req.user._id,
       procurementRequest: procurementRequest._id,
       sourceLivestock: livestock._id,
-      productName,
+      productName: productName.trim(),
       meatType,
-      quantity,
-      pricePerKg,
-      description: description || "",
+      quantity: Number(quantity),
+      pricePerKg: Number(pricePerKg),
+      description: description?.trim() || "",
+      processingStatus: "pending",
+      packagingStatus: "pending",
+      isPublished: false,
     });
 
     return res.status(201).json({
@@ -90,6 +90,8 @@ export const createMeatProduct = async (req, res) => {
       meatProduct,
     });
   } catch (error) {
+    console.error("Create meat product error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -100,11 +102,7 @@ export const createMeatProduct = async (req, res) => {
 export const updateProcessingStatus = async (req, res) => {
   try {
     const { id } = req.params;
-
     const { processingStatus } = req.body;
-
-    console.log("Processing Status Body:", req.body);
-    console.log("Received Status:", processingStatus);
 
     const allowedStatuses = ["pending", "processing", "processed"];
 
@@ -129,6 +127,12 @@ export const updateProcessingStatus = async (req, res) => {
 
     meatProduct.processingStatus = processingStatus;
 
+    // If product goes back from processed, it cannot remain packaged/published
+    if (processingStatus !== "processed") {
+      meatProduct.packagingStatus = "pending";
+      meatProduct.isPublished = false;
+    }
+
     await meatProduct.save();
 
     return res.status(200).json({
@@ -137,19 +141,19 @@ export const updateProcessingStatus = async (req, res) => {
       meatProduct,
     });
   } catch (error) {
+    console.error("Update processing status error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
+
 export const updatePackagingStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { packagingStatus } = req.body;
-
-    console.log("Packaging Status Body:", req.body);
-    console.log("Received Packaging Status:", packagingStatus);
 
     if (!["pending", "packaged"].includes(packagingStatus)) {
       return res.status(400).json({
@@ -170,7 +174,6 @@ export const updatePackagingStatus = async (req, res) => {
       });
     }
 
-    // Product must be processed before packaging
     if (
       packagingStatus === "packaged" &&
       meatProduct.processingStatus !== "processed"
@@ -183,6 +186,11 @@ export const updatePackagingStatus = async (req, res) => {
 
     meatProduct.packagingStatus = packagingStatus;
 
+    // If package is removed, product should not stay published
+    if (packagingStatus !== "packaged") {
+      meatProduct.isPublished = false;
+    }
+
     await meatProduct.save();
 
     return res.status(200).json({
@@ -191,6 +199,113 @@ export const updatePackagingStatus = async (req, res) => {
       meatProduct,
     });
   } catch (error) {
+    console.error("Update packaging status error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const publishMeatProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const meatProduct = await MeatProduct.findOne({
+      _id: id,
+      slaughterhouse: req.user._id,
+    });
+
+    if (!meatProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Meat product not found",
+      });
+    }
+
+    if (meatProduct.isPublished) {
+      return res.status(400).json({
+        success: false,
+        message: "Meat product is already published",
+      });
+    }
+
+    if (meatProduct.processingStatus !== "processed") {
+      return res.status(400).json({
+        success: false,
+        message: "Meat product must be processed before publishing",
+      });
+    }
+
+    if (meatProduct.packagingStatus !== "packaged") {
+      return res.status(400).json({
+        success: false,
+        message: "Meat product must be packaged before publishing",
+      });
+    }
+
+    if (Number(meatProduct.quantity) <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Product quantity must be greater than 0",
+      });
+    }
+
+    meatProduct.isPublished = true;
+
+    await meatProduct.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Meat product published to Super Shops successfully",
+      meatProduct,
+    });
+  } catch (error) {
+    console.error("Publish meat product error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const unpublishMeatProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const meatProduct = await MeatProduct.findOne({
+      _id: id,
+      slaughterhouse: req.user._id,
+    });
+
+    if (!meatProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Meat product not found",
+      });
+    }
+
+    if (!meatProduct.isPublished) {
+      return res.status(400).json({
+        success: false,
+        message: "Meat product is already unpublished",
+      });
+    }
+
+    meatProduct.isPublished = false;
+
+    await meatProduct.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Meat product unpublished successfully",
+      meatProduct,
+    });
+  } catch (error) {
+    console.error("Unpublish meat product error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -203,6 +318,7 @@ export const getAvailableMeatProducts = async (req, res) => {
     const products = await MeatProduct.find({
       processingStatus: "processed",
       packagingStatus: "packaged",
+      isPublished: true,
       isArchived: false,
       quantity: { $gt: 0 },
     })
@@ -215,12 +331,15 @@ export const getAvailableMeatProducts = async (req, res) => {
       products,
     });
   } catch (error) {
+    console.error("Get available meat products error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
+
 export const getMyMeatProducts = async (req, res) => {
   try {
     const products = await MeatProduct.find({
@@ -242,6 +361,8 @@ export const getMyMeatProducts = async (req, res) => {
       products,
     });
   } catch (error) {
+    console.error("Get my meat products error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -272,7 +393,6 @@ export const archiveMeatProduct = async (req, res) => {
       });
     }
 
-    // Product should be packaged before archive
     if (
       meatProduct.processingStatus !== "processed" ||
       meatProduct.packagingStatus !== "packaged"
@@ -283,7 +403,6 @@ export const archiveMeatProduct = async (req, res) => {
       });
     }
 
-    // Do not archive while stock is still available
     if (meatProduct.quantity > 0) {
       return res.status(400).json({
         success: false,
@@ -292,6 +411,7 @@ export const archiveMeatProduct = async (req, res) => {
     }
 
     meatProduct.isArchived = true;
+    meatProduct.isPublished = false;
 
     await meatProduct.save();
 
@@ -301,6 +421,8 @@ export const archiveMeatProduct = async (req, res) => {
       meatProduct,
     });
   } catch (error) {
+    console.error("Archive meat product error:", error);
+
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -5,6 +5,8 @@ import {
   createMeatProduct,
   getAvailableMeatProducts,
   getMyMeatProducts,
+  publishMeatProduct,
+  unpublishMeatProduct,
   updatePackagingStatus,
   updateProcessingStatus,
 } from "../controllers/meatProductController.js";
@@ -15,6 +17,7 @@ import {
 } from "../middleware/isAuthenticated.js";
 
 const router = express.Router();
+
 router.get(
   "/available",
   isAuthenticated,
@@ -49,6 +52,21 @@ router.patch(
   authorizeRoles("slaughterhouse"),
   updatePackagingStatus,
 );
+
+router.patch(
+  "/:id/publish",
+  isAuthenticated,
+  authorizeRoles("slaughterhouse"),
+  publishMeatProduct,
+);
+
+router.patch(
+  "/:id/unpublish",
+  isAuthenticated,
+  authorizeRoles("slaughterhouse"),
+  unpublishMeatProduct,
+);
+
 router.patch(
   "/:id/archive",
   isAuthenticated,

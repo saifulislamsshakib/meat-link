@@ -54,6 +54,14 @@ const meatProductSchema = new mongoose.Schema(
       enum: ["pending", "packaged"],
       default: "pending",
     },
+
+    // false = Slaughterhouse has not published it
+    // true = Super Shops can see it
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
+
     isArchived: {
       type: Boolean,
       default: false,

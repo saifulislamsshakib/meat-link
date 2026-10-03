@@ -10,6 +10,7 @@ function SlaughterhouseProductManagement() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const loadProducts = async () => {
     try {
@@ -17,7 +18,6 @@ function SlaughterhouseProductManagement() {
 
       const response = await api.get("/meat-products/my-products");
 
-      // Archived products active management list-এ দেখাবো না
       const activeProducts = (response.data.products || []).filter(
         (product) => !product.isArchived,
       );
@@ -42,6 +42,7 @@ function SlaughterhouseProductManagement() {
     try {
       setActionLoading(productId);
       setError("");
+      setSuccess("");
 
       await api.patch(`/meat-products/${productId}/processing`, {
         processingStatus,
@@ -63,6 +64,7 @@ function SlaughterhouseProductManagement() {
     try {
       setActionLoading(productId);
       setError("");
+      setSuccess("");
 
       await api.patch(`/meat-products/${productId}/packaging`, {
         packagingStatus,
@@ -74,6 +76,68 @@ function SlaughterhouseProductManagement() {
 
       setError(
         error.response?.data?.message || "Failed to update packaging status.",
+      );
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const publishProduct = async (productId) => {
+    const confirmed = window.confirm(
+      "Publish this meat product to Super Shops?",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setActionLoading(productId);
+      setError("");
+      setSuccess("");
+
+      const response = await api.patch(`/meat-products/${productId}/publish`);
+
+      setSuccess(
+        response.data.message || "Meat product published successfully.",
+      );
+
+      await loadProducts();
+    } catch (error) {
+      console.error("Publish product failed:", error);
+
+      setError(
+        error.response?.data?.message || "Failed to publish meat product.",
+      );
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const unpublishProduct = async (productId) => {
+    const confirmed = window.confirm("Remove this product from Super Shops?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setActionLoading(productId);
+      setError("");
+      setSuccess("");
+
+      const response = await api.patch(`/meat-products/${productId}/unpublish`);
+
+      setSuccess(
+        response.data.message || "Meat product unpublished successfully.",
+      );
+
+      await loadProducts();
+    } catch (error) {
+      console.error("Unpublish product failed:", error);
+
+      setError(
+        error.response?.data?.message || "Failed to unpublish meat product.",
       );
     } finally {
       setActionLoading(null);
@@ -92,13 +156,15 @@ function SlaughterhouseProductManagement() {
     try {
       setActionLoading(productId);
       setError("");
+      setSuccess("");
 
       await api.patch(`/meat-products/${productId}/archive`);
 
-      // Immediately remove from active list
       setProducts((prev) =>
         prev.filter((product) => product._id !== productId),
       );
+
+      setSuccess("Product archived successfully.");
     } catch (error) {
       console.error("Failed to archive meat product:", error);
 
@@ -155,14 +221,15 @@ function SlaughterhouseProductManagement() {
   return (
     <div className="product-management-page">
       <div className="product-management-container">
-        {/* Header */}
         <div className="product-management-header">
           <div>
             <span>Slaughterhouse</span>
 
             <h1>Meat Product Management</h1>
 
-            <p>Manage processing and packaging status of your meat products.</p>
+            <p>
+              Manage processing, packaging and publishing of your meat products.
+            </p>
           </div>
 
           <div className="product-header-actions">
@@ -186,7 +253,8 @@ function SlaughterhouseProductManagement() {
 
         {error && <div className="product-management-error">{error}</div>}
 
-        {/* Products */}
+        {success && <div className="product-management-success">{success}</div>}
+
         {products.length === 0 ? (
           <div className="no-products-card">
             <div className="no-products-icon">🥩</div>
@@ -210,6 +278,12 @@ function SlaughterhouseProductManagement() {
 
               const packagingAction = getPackagingAction(product);
 
+              const canPublish =
+                product.processingStatus === "processed" &&
+                product.packagingStatus === "packaged" &&
+                Number(product.quantity || 0) > 0 &&
+                !product.isPublished;
+
               const canArchive =
                 product.processingStatus === "processed" &&
                 product.packagingStatus === "packaged" &&
@@ -217,7 +291,6 @@ function SlaughterhouseProductManagement() {
 
               return (
                 <div className="product-card" key={product._id}>
-                  {/* Card Header */}
                   <div className="product-card-header">
                     <div>
                       <span className="product-label">MEAT PRODUCT</span>
@@ -261,6 +334,18 @@ function SlaughterhouseProductManagement() {
                     </div>
 
                     <div className="product-info">
+                      <span>Published</span>
+
+                      <strong
+                        className={`status-pill ${
+                          product.isPublished ? "published" : "unpublished"
+                        }`}
+                      >
+                        {product.isPublished ? "Published" : "Unpublished"}
+                      </strong>
+                    </div>
+
+                    <div className="product-info">
                       <span>Created</span>
 
                       <strong>
@@ -281,7 +366,6 @@ function SlaughterhouseProductManagement() {
                     </div>
                   )}
 
-                  {/* Actions */}
                   <div className="product-actions">
                     {processingAction && (
                       <button
@@ -313,14 +397,38 @@ function SlaughterhouseProductManagement() {
                       </button>
                     )}
 
-                    {product.processingStatus === "processed" &&
-                      product.packagingStatus === "packaged" && (
-                        <div className="ready-badge">
-                          ✓ Ready for Super Shop
-                        </div>
-                      )}
+                    {canPublish && (
+                      <button
+                        type="button"
+                        className="publish-btn"
+                        disabled={actionLoading === product._id}
+                        onClick={() => publishProduct(product._id)}
+                      >
+                        {actionLoading === product._id
+                          ? "Publishing..."
+                          : "Publish to Super Shops"}
+                      </button>
+                    )}
 
-                    {/* Archive only when stock is 0 */}
+                    {product.isPublished && (
+                      <>
+                        <div className="ready-badge">
+                          ✓ Visible to Super Shops
+                        </div>
+
+                        <button
+                          type="button"
+                          className="unpublish-btn"
+                          disabled={actionLoading === product._id}
+                          onClick={() => unpublishProduct(product._id)}
+                        >
+                          {actionLoading === product._id
+                            ? "Updating..."
+                            : "Unpublish"}
+                        </button>
+                      </>
+                    )}
+
                     {canArchive && (
                       <button
                         type="button"
