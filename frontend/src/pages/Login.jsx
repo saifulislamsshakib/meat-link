@@ -5,7 +5,6 @@ import api from "../services/api";
 
 function Login() {
   const navigate = useNavigate();
-
   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -13,6 +12,7 @@ function Login() {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -21,13 +21,11 @@ function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-
     setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
     setLoading(true);
 
@@ -152,15 +150,26 @@ function Login() {
                 <a href="#">Forgot password?</a>
               </div>
 
-              <input
-                id="password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                required
-              />
+              <div className="password-input-wrapper">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
             </div>
 
             <button type="submit" className="login-submit" disabled={loading}>
