@@ -1,3 +1,10 @@
+@"
 node_modules/
 .env
-backend/.env
+.env.*
+!.env.example
+
+dist/
+build/
+.vercel/
+"@ | Set-Content .gitignore
