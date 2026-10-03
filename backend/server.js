@@ -21,14 +21,13 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );
 
 app.use("/api/v1/user", userRoute);
 
-//http://localhost:8080/api/v1/user/register
 app.use("/api/v1/test", testRoute);
 app.use("/api/v1/livestock", livestockRoute);
 app.use("/api/v1/procurement-requests", procurementRequestRoute);
