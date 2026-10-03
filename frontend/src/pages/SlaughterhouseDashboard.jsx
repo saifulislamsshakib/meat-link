@@ -70,9 +70,9 @@ function SlaughterhouseDashboard() {
           <a onClick={() => navigate("/slaughterhouse/procurement-requests")}>
             Procurement Requests
           </a>
-          <a onClick={() => navigate("/slaughterhouse/product-management")}>
+          {/* <a onClick={() => navigate("/slaughterhouse/product-management")}>
             Meat Products
-          </a>
+          </a> */}
           <a onClick={() => navigate("/slaughterhouse/product-management")}>
             Product Management
           </a>
