@@ -2,7 +2,7 @@ import { ProcurementRequest } from "../models/procurementRequestModel.js";
 import { Livestock } from "../models/livestockModel.js";
 import { User } from "../models/userModel.js";
 import { createNotification } from "./notificationController.js";
-
+import { Delivery } from "../models/deliveryModel.js";
 export const createProcurementRequest = async (req, res) => {
   try {
     const { farmerId, livestockId, requestedQuantity, message } = req.body;
@@ -86,7 +86,10 @@ export const getMyProcurementRequests = async (req, res) => {
     const requests = await ProcurementRequest.find({
       farmer: req.user._id,
     })
-      .populate("slaughterhouse", "firstName lastName email")
+      .populate(
+        "slaughterhouse",
+        "firstName lastName email address city zipCode phoneNo",
+      )
       .populate(
         "livestock",
         "animalType breed quantity availableQuantity pricePerAnimal location",
@@ -230,6 +233,137 @@ export const getMySentProcurementRequests = async (req, res) => {
       success: true,
       count: requests.length,
       requests,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const assignDriverToProcurement = async (req, res) => {
+  try {
+    const { procurementRequestId, driverId, notes } = req.body;
+
+    if (!procurementRequestId || !driverId) {
+      return res.status(400).json({
+        success: false,
+        message: "Procurement request ID and driver ID are required",
+      });
+    }
+
+    // Find procurement request
+    const request = await ProcurementRequest.findById(procurementRequestId)
+      .populate(
+        "slaughterhouse",
+        "firstName lastName email address city zipCode phoneNo",
+      )
+      .populate(
+        "livestock",
+        "animalType breed quantity availableQuantity pricePerAnimal location",
+      );
+
+    if (!request) {
+      return res.status(404).json({
+        success: false,
+        message: "Procurement request not found",
+      });
+    }
+
+    // Only the farmer who owns this request can assign a driver
+    if (request.farmer.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to assign a driver",
+      });
+    }
+
+    // Request must be accepted first
+    if (request.status !== "accepted") {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Only accepted procurement requests can be assigned for delivery",
+      });
+    }
+
+    // Find driver
+    const driver = await User.findOne({
+      _id: driverId,
+      role: "driver",
+    });
+
+    if (!driver) {
+      return res.status(404).json({
+        success: false,
+        message: "Driver not found",
+      });
+    }
+
+    // Check existing delivery
+    const existingDelivery = await Delivery.findOne({
+      procurementRequest: request._id,
+    });
+
+    if (existingDelivery) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "A delivery has already been assigned for this procurement request",
+      });
+    }
+
+    // Make sure required destination information exists
+    if (!request.slaughterhouse?.address) {
+      return res.status(400).json({
+        success: false,
+        message: "Slaughterhouse address is not available",
+      });
+    }
+
+    if (!request.livestock?.location) {
+      return res.status(400).json({
+        success: false,
+        message: "Livestock pickup location is not available",
+      });
+    }
+
+    // Create delivery
+    const delivery = await Delivery.create({
+      procurementRequest: request._id,
+
+      driver: driver._id,
+
+      // Farmer's livestock location
+      pickupLocation: request.livestock.location,
+
+      // Slaughterhouse address
+      deliveryAddress: request.slaughterhouse.address,
+      deliveryCity: request.slaughterhouse.city || "",
+      deliveryZipCode: request.slaughterhouse.zipCode || "",
+
+      deliveryType: "livestock_to_slaughterhouse",
+
+      notes: notes || "",
+
+      status: "assigned",
+    });
+
+    // Notify driver
+    await createNotification({
+      recipient: driver._id,
+      sender: req.user._id,
+      type: "delivery",
+      title: "New Livestock Delivery Assigned",
+      message: `A new livestock delivery has been assigned to you for ${request.livestock.animalType}.`,
+      relatedId: delivery._id,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Driver assigned successfully",
+      delivery,
     });
   } catch (error) {
     return res.status(500).json({

@@ -21,7 +21,7 @@ const router = express.Router();
 router.get(
   "/drivers",
   isAuthenticated,
-  authorizeRoles("slaughterhouse"),
+  authorizeRoles("farmer", "slaughterhouse"),
   getAvailableDrivers,
 );
 router.post(

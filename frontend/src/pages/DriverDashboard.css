@@ -1,394 +1,476 @@
 .driver-dashboard {
   min-height: 100vh;
-  padding-top: 76px;
   display: flex;
-  background: #f6f8fa;
+  background: #f5f7fa;
+  color: #1f2937;
 }
 
+/* Sidebar */
+
 .driver-sidebar {
-  position: fixed;
-  top: 76px;
-  left: 0;
-  bottom: 0;
-  width: 245px;
+  width: 250px;
+  min-height: 100vh;
+  background: #111827;
+  color: white;
   padding: 28px 18px;
-  background: #ffffff;
-  border-right: 1px solid #e7ebef;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
 }
 
 .driver-brand {
-  padding: 0 14px 28px;
-  color: #172033;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
+  padding: 0 12px 30px;
 }
 
 .driver-nav {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .driver-nav a {
-  padding: 12px 14px;
+  padding: 13px 14px;
   border-radius: 10px;
-  color: #687386;
-  font-size: 14px;
+  color: #d1d5db;
+  text-decoration: none;
   cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 15px;
 }
 
 .driver-nav a:hover,
 .driver-nav a.active {
-  background: #e9f7ef;
-  color: #16864a;
-  font-weight: 700;
+  background: #1f2937;
+  color: white;
 }
 
+/* Main */
+
 .driver-main {
-  width: calc(100% - 245px);
-  margin-left: 245px;
-  padding: 38px 44px;
+  flex: 1;
+  padding: 35px;
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .driver-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   margin-bottom: 30px;
 }
 
 .driver-label {
-  margin-bottom: 6px;
-  color: #16864a;
-  font-size: 13px;
+  color: #6b7280;
+  font-size: 14px;
   font-weight: 700;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .driver-header h1 {
-  margin-bottom: 7px;
-  color: #172033;
+  margin: 0;
   font-size: 32px;
+  color: #111827;
 }
 
 .driver-header p {
-  color: #7c8595;
-  font-size: 14px;
+  color: #6b7280;
+  margin: 8px 0 0;
 }
 
 .driver-profile {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 14px 9px 8px;
-  border: 1px solid #e7ebef;
+  gap: 12px;
+  background: white;
+  padding: 12px 16px;
   border-radius: 14px;
-  background: #ffffff;
+  border: 1px solid #e5e7eb;
 }
 
-.driver-avatar {
-  width: 42px;
-  height: 42px;
+.driver-profile > div:last-child {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: #16864a;
-  color: #ffffff;
-  font-weight: 800;
-}
-
-.driver-profile strong {
-  display: block;
-  color: #273043;
-  font-size: 13px;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .driver-profile span {
-  display: block;
-  margin-top: 3px;
-  color: #8992a2;
-  font-size: 10px;
-}
-
-.driver-error {
-  margin-bottom: 20px;
-  padding: 13px 15px;
-  border-radius: 10px;
-  background: #fff1f1;
-  color: #c93636;
+  color: #6b7280;
   font-size: 13px;
 }
+
+.driver-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #111827;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+/* Error */
+
+.driver-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+/* Stats */
 
 .driver-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 18px;
   margin-bottom: 30px;
 }
 
 .driver-stat-card {
-  padding: 20px;
-  border: 1px solid #e7ebef;
-  border-radius: 15px;
-  background: #ffffff;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .driver-stat-card span {
-  display: block;
-  margin-bottom: 6px;
-  color: #7d8797;
-  font-size: 11px;
+  color: #6b7280;
+  font-size: 14px;
 }
 
 .driver-stat-card strong {
-  color: #172033;
-  font-size: 23px;
+  font-size: 28px;
+  color: #111827;
 }
 
+/* Section */
+
 .driver-section {
-  margin-bottom: 30px;
+  background: transparent;
 }
 
 .driver-section-header {
-  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
 .driver-section-header h2 {
-  color: #172033;
-  font-size: 19px;
+  margin: 0;
+  color: #111827;
 }
 
 .driver-section-header p {
-  margin-top: 4px;
-  color: #8992a2;
-  font-size: 12px;
+  margin: 6px 0 0;
+  color: #6b7280;
 }
+
+/* Empty */
+
+.driver-empty {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 60px 25px;
+  text-align: center;
+}
+
+.driver-empty > div {
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+.driver-empty h2 {
+  margin: 0 0 8px;
+}
+
+.driver-empty p {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* Delivery list */
 
 .driver-delivery-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .driver-delivery-card {
-  padding: 24px;
-  border: 1px solid #e7ebef;
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(23, 32, 51, 0.04);
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
 .driver-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 20px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #edf0f4;
-}
-
-.driver-card-label {
-  color: #16864a;
-  font-size: 10px;
-  font-weight: 700;
+  align-items: flex-start;
+  margin-bottom: 22px;
 }
 
 .driver-card-header h2 {
-  margin: 6px 0 4px;
-  color: #172033;
-  font-size: 20px;
+  margin: 12px 0 5px;
+  color: #111827;
+  font-size: 22px;
 }
 
 .driver-card-header p {
-  color: #8992a2;
-  font-size: 11px;
-  text-transform: capitalize;
+  margin: 0;
+  color: #6b7280;
 }
 
-.driver-status {
-  padding: 7px 11px;
+.driver-type-badge-wrapper {
+  display: flex;
+}
+
+.driver-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.driver-type-badge.meat {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.driver-type-badge.livestock {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+/* Status */
+
+.driver-status {
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 
 .driver-status.assigned {
-  background: #fff6df;
-  color: #a76b00;
+  background: #fff7ed;
+  color: #c2410c;
 }
 
 .driver-status.accepted {
-  background: #e9f7ef;
-  color: #16864a;
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
 .driver-status.picked_up {
-  background: #eef3ff;
-  color: #4169b3;
+  background: #f5f3ff;
+  color: #6d28d9;
 }
 
 .driver-status.in_transit {
-  background: #f4edff;
-  color: #7950a8;
+  background: #ecfeff;
+  color: #0e7490;
 }
 
 .driver-status.delivered {
-  background: #e9f7ef;
-  color: #16864a;
+  background: #f0fdf4;
+  color: #15803d;
 }
+
+/* Info */
 
 .driver-info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 20px 0;
+  gap: 15px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 14px;
+  margin-bottom: 18px;
 }
 
-.driver-info-grid span,
-.driver-notes span {
-  display: block;
-  margin-bottom: 6px;
-  color: #8992a2;
-  font-size: 10px;
+.driver-info-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.driver-info-grid span {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .driver-info-grid strong {
-  color: #273043;
-  font-size: 13px;
+  font-size: 14px;
+  color: #111827;
+  word-break: break-word;
 }
 
 .driver-total {
-  color: #16864a !important;
+  color: #15803d !important;
 }
 
+/* Notes */
+
 .driver-notes {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
   padding: 14px;
-  border-radius: 11px;
-  background: #f8fafc;
+  margin-bottom: 20px;
+}
+
+.driver-notes span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
 }
 
 .driver-notes p {
-  color: #667184;
-  font-size: 12px;
-  line-height: 1.6;
+  margin: 5px 0 0;
+  color: #78350f;
 }
+
+/* Progress */
 
 .driver-progress {
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 22px;
-  flex-wrap: wrap;
+  margin: 25px 0;
+  overflow-x: auto;
+  padding: 5px 0;
 }
 
 .progress-item {
-  color: #a0a8b5;
-  font-size: 9px;
-  font-weight: 600;
+  min-width: 90px;
+  height: 35px;
+  border-radius: 50px;
+  background: #f3f4f6;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.progress-item.current {
+  background: #111827;
+  color: white;
 }
 
 .progress-item.done {
-  color: #16864a;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .progress-line {
-  width: 24px;
-  height: 2px;
-  background: #e1e5ea;
+  height: 3px;
+  min-width: 35px;
+  background: #e5e7eb;
 }
 
 .progress-line.done {
-  background: #16864a;
+  background: #22c55e;
 }
+
+/* Buttons */
 
 .driver-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
 }
 
-.driver-accept-btn,
-.driver-pickup-btn,
-.driver-transit-btn,
-.driver-delivered-btn {
+.driver-actions button {
   border: none;
-  padding: 11px 18px;
   border-radius: 10px;
-  color: #ffffff;
-  font-size: 12px;
+  padding: 12px 22px;
   font-weight: 700;
+  color: white;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.driver-actions button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.driver-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .driver-accept-btn {
-  background: #16864a;
+  background: #2563eb;
 }
 
 .driver-pickup-btn {
-  background: #4169b3;
+  background: #7c3aed;
 }
 
 .driver-transit-btn {
-  background: #7950a8;
+  background: #0891b2;
 }
 
 .driver-delivered-btn {
-  background: #16864a;
+  background: #16a34a;
 }
 
-.driver-accept-btn:disabled,
-.driver-pickup-btn:disabled,
-.driver-transit-btn:disabled,
-.driver-delivered-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+/* Complete */
 
 .driver-complete {
-  margin-top: 20px;
-  padding: 12px 14px;
+  margin-top: 15px;
+  padding: 13px;
   border-radius: 10px;
-  background: #e9f7ef;
-  color: #16864a;
-  font-size: 12px;
+  background: #f0fdf4;
+  color: #15803d;
+  text-align: center;
   font-weight: 700;
 }
 
-.driver-empty {
-  padding: 65px 20px;
-  text-align: center;
-  border: 1px solid #e7ebef;
-  border-radius: 18px;
-  background: #ffffff;
-}
-
-.driver-empty div {
-  margin-bottom: 12px;
-  font-size: 36px;
-}
-
-.driver-empty h2 {
-  margin-bottom: 6px;
-  color: #273043;
-}
-
-.driver-empty p {
-  color: #8992a2;
-  font-size: 13px;
-}
+/* Loading */
 
 .driver-loading {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #16864a;
-  font-weight: 700;
+  background: #f5f7fa;
+  color: #6b7280;
+  font-size: 18px;
 }
 
-@media (max-width: 1000px) {
+/* Responsive */
+
+@media (max-width: 1100px) {
   .driver-stats {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -398,34 +480,35 @@
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
+  .driver-dashboard {
+    display: block;
+  }
+
   .driver-sidebar {
-    display: none;
+    width: auto;
+    min-height: auto;
+    position: static;
+  }
+
+  .driver-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .driver-main {
-    width: 100%;
-    margin-left: 0;
-    padding: 25px;
+    padding: 20px;
   }
 
   .driver-header {
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 600px) {
-  .driver-dashboard {
-    padding-top: 70px;
-  }
-
-  .driver-main {
-    padding: 20px 16px;
-  }
-
   .driver-stats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .driver-info-grid {
@@ -436,14 +519,15 @@
     flex-direction: column;
   }
 
+  .driver-progress {
+    justify-content: flex-start;
+  }
+
   .driver-actions {
     justify-content: stretch;
   }
 
-  .driver-accept-btn,
-  .driver-pickup-btn,
-  .driver-transit-btn,
-  .driver-delivered-btn {
+  .driver-actions button {
     width: 100%;
   }
 }

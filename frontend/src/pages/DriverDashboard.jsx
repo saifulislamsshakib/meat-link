@@ -28,11 +28,6 @@ function DriverDashboard() {
       setLoading(false);
     }
   };
-  const cleanDeliveryAddress = (address) => {
-    if (!address) return "N/A";
-
-    return address.replace(/^Delivery Address:\s*/i, "");
-  };
 
   useEffect(() => {
     loadDeliveries();
@@ -82,7 +77,7 @@ function DriverDashboard() {
 
       case "accepted":
         return {
-          label: "Pick Up Order",
+          label: "Pick Up",
           endpoint: "pickup",
           className: "driver-pickup-btn",
         };
@@ -106,12 +101,29 @@ function DriverDashboard() {
     }
   };
 
+  const getDeliveryType = (delivery) => {
+    if (delivery.deliveryType === "livestock_to_slaughterhouse") {
+      return {
+        label: "Livestock Delivery",
+        icon: "🐄",
+        className: "livestock",
+      };
+    }
+
+    return {
+      label: "Meat Delivery",
+      icon: "🥩",
+      className: "meat",
+    };
+  };
+
   if (loading) {
     return <div className="driver-loading">Loading driver dashboard...</div>;
   }
 
   return (
     <div className="driver-dashboard">
+      {/* Sidebar */}
       <aside className="driver-sidebar">
         <div className="driver-brand">🚚 MeatLink</div>
 
@@ -121,11 +133,14 @@ function DriverDashboard() {
           <a onClick={() => navigate("/driver/deliveries")}>My Deliveries</a>
 
           <a onClick={() => navigate("/driver/notifications")}>Notifications</a>
+
           <a onClick={() => navigate("/complaints")}>Complaints</a>
         </nav>
       </aside>
 
+      {/* Main */}
       <main className="driver-main">
+        {/* Header */}
         <div className="driver-header">
           <div>
             <p className="driver-label">Driver Dashboard</p>
@@ -150,6 +165,7 @@ function DriverDashboard() {
           </div>
         </div>
 
+        {/* Error */}
         {error && <div className="driver-error">{error}</div>}
 
         {/* Stats */}
@@ -180,8 +196,7 @@ function DriverDashboard() {
           <div className="driver-section-header">
             <div>
               <h2>My Deliveries</h2>
-
-              <p>Orders assigned to you for delivery.</p>
+              <p>All deliveries currently assigned to you.</p>
             </div>
           </div>
 
@@ -198,21 +213,55 @@ function DriverDashboard() {
               {deliveries.map((delivery) => {
                 const action = getAction(delivery);
 
+                const deliveryType = getDeliveryType(delivery);
+
+                const isLivestock =
+                  delivery.deliveryType === "livestock_to_slaughterhouse";
+
                 const order = delivery.order;
                 const product = order?.meatProduct;
 
+                const procurement = delivery.procurementRequest;
+
+                const livestock = procurement?.livestock;
+
                 return (
                   <div className="driver-delivery-card" key={delivery._id}>
+                    {/* Card Header */}
                     <div className="driver-card-header">
                       <div>
-                        <span className="driver-card-label">DELIVERY</span>
+                        <div className="driver-type-badge-wrapper">
+                          <span
+                            className={`driver-type-badge ${deliveryType.className}`}
+                          >
+                            {deliveryType.icon} {deliveryType.label}
+                          </span>
+                        </div>
 
-                        <h2>{product?.productName || "Meat Order"}</h2>
+                        {isLivestock ? (
+                          <>
+                            <h2>
+                              {livestock?.animalType
+                                ? livestock.animalType.charAt(0).toUpperCase() +
+                                  livestock.animalType.slice(1)
+                                : "Livestock Delivery"}
+                            </h2>
 
-                        <p>
-                          {product?.meatType || "Meat"} · {order?.quantity || 0}{" "}
-                          kg
-                        </p>
+                            <p>
+                              {livestock?.breed || "Livestock"} ·{" "}
+                              {procurement?.requestedQuantity || 0} animal(s)
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <h2>{product?.productName || "Meat Order"}</h2>
+
+                            <p>
+                              {product?.meatType || "Meat"} ·{" "}
+                              {order?.quantity || 0} kg
+                            </p>
+                          </>
+                        )}
                       </div>
 
                       <span className={`driver-status ${delivery.status}`}>
@@ -220,6 +269,7 @@ function DriverDashboard() {
                       </span>
                     </div>
 
+                    {/* Delivery Information */}
                     <div className="driver-info-grid">
                       <div>
                         <span>Pickup Location</span>
@@ -230,9 +280,7 @@ function DriverDashboard() {
                       <div>
                         <span>Delivery Address</span>
 
-                        <strong>
-                          {cleanDeliveryAddress(delivery.deliveryAddress)}
-                        </strong>
+                        <strong>{delivery.deliveryAddress || "N/A"}</strong>
                       </div>
 
                       <div>
@@ -247,29 +295,57 @@ function DriverDashboard() {
                         <strong>{delivery.deliveryZipCode || "N/A"}</strong>
                       </div>
 
-                      <div>
-                        <span>Order Total</span>
+                      {isLivestock ? (
+                        <>
+                          <div>
+                            <span>Farmer</span>
 
-                        <strong className="driver-total">
-                          ৳ {Number(order?.totalPrice || 0).toLocaleString()}
-                        </strong>
-                      </div>
+                            <strong>
+                              {procurement?.farmer
+                                ? `${procurement.farmer.firstName || ""} ${
+                                    procurement.farmer.lastName || ""
+                                  }`
+                                : "N/A"}
+                            </strong>
+                          </div>
 
-                      <div>
-                        <span>Quantity</span>
+                          <div>
+                            <span>Quantity</span>
 
-                        <strong>{order?.quantity || 0} kg</strong>
-                      </div>
+                            <strong>
+                              {procurement?.requestedQuantity || 0} animal(s)
+                            </strong>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <span>Order Total</span>
+
+                            <strong className="driver-total">
+                              ৳{" "}
+                              {Number(order?.totalPrice || 0).toLocaleString()}
+                            </strong>
+                          </div>
+
+                          <div>
+                            <span>Quantity</span>
+
+                            <strong>{order?.quantity || 0} kg</strong>
+                          </div>
+                        </>
+                      )}
                     </div>
 
+                    {/* Notes */}
                     {delivery.notes && (
                       <div className="driver-notes">
                         <span>Notes</span>
-
                         <p>{delivery.notes}</p>
                       </div>
                     )}
 
+                    {/* Progress */}
                     <div className="driver-progress">
                       <div
                         className={
@@ -368,6 +444,7 @@ function DriverDashboard() {
                       </div>
                     </div>
 
+                    {/* Action */}
                     {action && (
                       <div className="driver-actions">
                         <button
@@ -385,6 +462,7 @@ function DriverDashboard() {
                       </div>
                     )}
 
+                    {/* Completed */}
                     {delivery.status === "delivered" && (
                       <div className="driver-complete">
                         ✓ Delivery completed successfully

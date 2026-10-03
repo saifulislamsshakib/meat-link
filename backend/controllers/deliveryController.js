@@ -7,6 +7,7 @@ export const getAvailableDrivers = async (req, res) => {
   try {
     const drivers = await User.find({
       role: "driver",
+      accountStatus: "approved",
     })
       .select("_id firstName lastName email phoneNo role")
       .sort({ firstName: 1, lastName: 1 });
@@ -98,6 +99,10 @@ export const assignDriver = async (req, res) => {
       deliveryAddress: order.deliveryAddress,
       deliveryCity: order.deliveryCity,
       deliveryZipCode: order.deliveryZipCode,
+
+      // Slaughterhouse -> Buyer
+      deliveryType: "meat_to_buyer",
+
       notes: notes || "",
       status: "assigned",
     });
@@ -122,6 +127,7 @@ export const assignDriver = async (req, res) => {
     });
   }
 };
+
 export const getMyDeliveries = async (req, res) => {
   try {
     const deliveries = await Delivery.find({
@@ -135,6 +141,24 @@ export const getMyDeliveries = async (req, res) => {
           path: "meatProduct",
           select: "productName meatType",
         },
+      })
+      .populate({
+        path: "procurementRequest",
+        populate: [
+          {
+            path: "farmer",
+            select: "firstName lastName email phoneNo",
+          },
+          {
+            path: "slaughterhouse",
+            select: "firstName lastName email phoneNo address city zipCode",
+          },
+          {
+            path: "livestock",
+            select:
+              "animalType breed quantity availableQuantity pricePerAnimal location",
+          },
+        ],
       })
       .sort({ createdAt: -1 });
 
@@ -269,6 +293,7 @@ export const startDelivery = async (req, res) => {
     });
   }
 };
+
 export const completeDelivery = async (req, res) => {
   try {
     const { id } = req.params;
@@ -276,7 +301,9 @@ export const completeDelivery = async (req, res) => {
     const delivery = await Delivery.findOne({
       _id: id,
       driver: req.user._id,
-    }).populate("order");
+    })
+      .populate("order")
+      .populate("procurementRequest");
 
     if (!delivery) {
       return res.status(404).json({
@@ -298,19 +325,25 @@ export const completeDelivery = async (req, res) => {
 
     await delivery.save();
 
-    // Update related meat order
-    const order = delivery.order;
+    // Meat delivery
+    if (delivery.deliveryType === "meat_to_buyer" && delivery.order) {
+      delivery.order.status = "delivered";
+      await delivery.order.save();
+    }
 
-    if (order) {
-      order.status = "delivered";
-      await order.save();
+    // Livestock delivery
+    if (
+      delivery.deliveryType === "livestock_to_slaughterhouse" &&
+      delivery.procurementRequest
+    ) {
+      delivery.procurementRequest.status = "completed";
+      await delivery.procurementRequest.save();
     }
 
     return res.status(200).json({
       success: true,
       message: "Delivery completed successfully",
       delivery,
-      order,
     });
   } catch (error) {
     return res.status(500).json({

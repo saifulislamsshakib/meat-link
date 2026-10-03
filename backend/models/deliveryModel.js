@@ -2,11 +2,18 @@ import mongoose from "mongoose";
 
 const deliverySchema = new mongoose.Schema(
   {
+    // Slaughterhouse -> Buyer
     order: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "MeatOrder",
-      required: true,
-      unique: true,
+      default: null,
+    },
+
+    // Farmer -> Slaughterhouse
+    procurementRequest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProcurementRequest",
+      default: null,
     },
 
     driver: {
@@ -33,6 +40,12 @@ const deliverySchema = new mongoose.Schema(
     deliveryZipCode: {
       type: String,
       default: "",
+    },
+
+    deliveryType: {
+      type: String,
+      enum: ["meat_to_buyer", "livestock_to_slaughterhouse"],
+      required: true,
     },
 
     status: {
@@ -75,6 +88,28 @@ const deliverySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+  },
+);
+
+// One delivery per MeatOrder
+deliverySchema.index(
+  { order: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      order: { $type: "objectId" },
+    },
+  },
+);
+
+// One delivery per ProcurementRequest
+deliverySchema.index(
+  { procurementRequest: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      procurementRequest: { $type: "objectId" },
+    },
   },
 );
 

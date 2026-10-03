@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   acceptProcurementRequest,
+  assignDriverToProcurement,
   createProcurementRequest,
   getMyProcurementRequests,
   getMySentProcurementRequests,
@@ -45,5 +46,11 @@ router.get(
   isAuthenticated,
   authorizeRoles("slaughterhouse"),
   getMySentProcurementRequests,
+);
+router.post(
+  "/assign-driver",
+  isAuthenticated,
+  authorizeRoles("farmer"),
+  assignDriverToProcurement,
 );
 export default router;
