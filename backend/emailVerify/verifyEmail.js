@@ -20,9 +20,9 @@ export const verifyEmail = async (token, email) => {
 
       <p>Please click the link below to verify your email:</p>
 
-      <a href="http://localhost:5173/verify/${token}">
-        Verify Email
-      </a>
+      <a href="https://meat-link-sepia.vercel.app/verify/${token}">
+  Verify Email
+</a>
 
       <p>This verification link will expire in 10 minutes.</p>
     `,
